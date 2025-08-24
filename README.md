@@ -52,7 +52,7 @@ cd astro-storefront-case-study
 pnpm install
 ```
 
-# Run in mock mode (default)
+### Run in mock mode (default)
 
 ```bash
 pnpm dev
