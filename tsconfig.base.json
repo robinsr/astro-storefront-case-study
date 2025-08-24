@@ -1,14 +1,4 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts",
-    "public/**/*",
-    "src/**/*",
-    "tests/**/*"
-  ],
-  "exclude": [
-    "dist"
-  ],
   "compilerOptions": {
     "esModuleInterop": true,
     "target": "es2021",
@@ -46,4 +36,9 @@
       ".shopify/types"
     ],
   },
+  "include": [
+    "public/**/*",
+    "src/**/*",
+    "tests/**/*"
+  ]
 }
