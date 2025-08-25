@@ -1,0 +1,31 @@
+---
+import { type HTMLAttributes } from 'astro/types';
+type Props = HTMLAttributes<'div'>;
+const props = Astro.props;
+
+// Just for reference (do not do string-concatenation or tailwind will not work right)
+// const _tailwindSizes = {
+//   'sm': 640,
+//   'md': 768,
+//   'lg': 1024,
+//   'xl': 1280,
+//   '2xl': 1536,
+// }
+
+const gridColumns = [
+  // extra-small, single column, beyond which a single column might look weird
+  'max-[520px]:grid-cols-1',
+  // base mobile, two column
+  'grid-cols-2',
+  // each size up adds on additional column
+  'md:grid-cols-3',
+  'lg:grid-cols-4',
+  'xl:grid-cols-5',
+  '2xl:grid-cols-6',
+];
+
+---
+
+<div class:list={['cw-grid', 'grid', 'gap-2', ...gridColumns, props.class ]}>
+  <slot />
+</div>

@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'ul'> {
+  items: unknown[];
+  children: any;
+  listStyles?: string;
+}
+
+const { items, listStyles = '', class: className, 'class:list': classList, ...rest } = Astro.props;
+
+if (!Astro.slots.has('default')) {
+  throw new Error('Cannot render SlotList without a default slot');
+}
+
+const htmlItems = await Promise.all(
+  items.map((item, i) => Astro.slots.render('default', [item, i])),
+);
+---
+
+<ul class:list={['slot-list', className, classList]} {...rest}>
+  {
+    htmlItems.map((frag, i) => (
+      <li class:list={[ listStyles ]}>
+        <Fragment set:html={frag} />
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,129 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { ColorVariant, CustomSpacing, ScreenBreakpoint } from '../types';
+
+interface Props extends HTMLAttributes<'div'> {
+  spacing?: CustomSpacing;
+  variant?: ColorVariant;
+  textPosition?: 'start' | 'center' | 'end';
+  horizontal?: boolean;
+  horizontalAt?: ScreenBreakpoint;
+  container?: boolean;
+  containerGap?: CustomSpacing;
+  wrapContent?: boolean;
+  wrapClass?: string;
+}
+
+const {
+  spacing = 'base',
+  variant = 'default',
+  textPosition = 'center',
+  horizontal = false,
+  horizontalAt = null,
+  container = false,
+  containerGap = 'base',
+  wrapContent = false,
+  wrapClass = null,
+  class: className,
+  'class:list': classList,
+  ...props
+} = Astro.props;
+
+const gapSpacing: Record<CustomSpacing, string> = {
+  none: 'gap-0',
+  base: 'gap-4',
+  xs: 'gap-1',
+  sm: 'gap-2',
+  md: 'gap-4',
+  lg: 'gap-6',
+  xl: 'gap-8',
+  '2xl': 'gap-12',
+};
+
+const dividerCls = [
+  'd-divider',
+
+  `cw-space-${spacing}`,
+
+  variant === 'neutral' ? 'd-divider-neutral text-neutral' : null,
+  variant === 'primary' ? 'd-divider-primary text-primary' : null,
+  variant === 'secondary' ? 'd-divider-secondary text-secondary' : null,
+  variant === 'accent' ? 'd-divider-accent text-accent' : null,
+  variant === 'neutral' ? 'd-divider-neutral text-neutral' : null,
+  variant === 'info' ? 'd-divider-info text-info' : null,
+  variant === 'success' ? 'd-divider-success text-success' : null,
+  variant === 'warning' ? 'd-divider-warning text-warning' : null,
+  variant === 'error' ? 'd-divider-error text-error' : null,
+
+  textPosition === 'start' ? 'd-divider-start' : null,
+  textPosition === 'end' ? 'd-divider-end' : null,
+
+  horizontal ? 'd-divider-horizontal' : null,
+
+  horizontalAt === 'sm' ? 'sm:d-divider-horizontal' : null,
+  horizontalAt === 'md' ? 'md:d-divider-horizontal' : null,
+  horizontalAt === 'lg' ? 'lg:d-divider-horizontal' : null,
+  horizontalAt === 'xl' ? 'xl:d-divider-horizontal' : null,
+  horizontalAt === '2xl' ? '2xl:d-divider-horizontal' : null,
+
+  className,
+  classList,
+]
+  .filter(Boolean)
+  .join(' ');
+
+const containerCls = [
+  horizontalAt === 'sm' ? 'sm:flex-row' : null,
+  horizontalAt === 'md' ? 'md:flex-row' : null,
+  horizontalAt === 'lg' ? 'lg:flex-row' : null,
+  horizontalAt === 'xl' ? 'xl:flex-row' : null,
+  horizontalAt === '2xl' ? '2xl:flex-row' : null,
+  containerGap ? gapSpacing[containerGap] : null,
+]
+  .filter(Boolean)
+  .join(' ');
+
+const wrapCls = wrapClass || 'w-full flex flex-col justify-center';
+
+const isEmpty = !Astro.slots.has('default');
+---
+
+{/* Containerized divider; will change horizontal to vertical at breakpoint "horizontalAt" */}
+{
+  container && (
+    <div class:list={['flex w-full flex-col justify-evenly', containerCls]}>
+      {wrapContent ? (
+        <div class:list={wrapCls}>
+          <slot name="top-left" />
+        </div>
+      ) : (
+        <slot name="top-left" />
+      )}
+      {isEmpty && <div class:list={dividerCls} />}
+      {!isEmpty && (
+        <div class:list={dividerCls}>
+          <slot />
+        </div>
+      )}
+      {wrapContent ? (
+        <div class:list={wrapCls}>
+          <slot name="bottom-right" />
+        </div>
+      ) : (
+        <slot name="bottom-right" />
+      )}
+    </div>
+  )
+}
+
+{/* Simple divider; just the line (vertical or horizontal) */}
+{!container && isEmpty && <div class:list={dividerCls} />}
+
+{/* Divider with content */}
+{
+  !container && !isEmpty && (
+    <div class:list={dividerCls}>
+      <slot />
+    </div>
+  )
+}

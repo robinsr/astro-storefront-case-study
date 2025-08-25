@@ -1,0 +1,48 @@
+---
+/**
+ * # Container
+ * Wraps page sections, applies site-wide styles and handles reponsiveness
+ */
+import type { HTMLAttributes } from 'astro/types';
+import { useTheme } from '~/hooks/useTheme.ts';
+
+interface Props extends HTMLAttributes<'section'> {
+  type?:
+    | 'primary'
+    | 'secondary'
+    | 'transparent'
+    | 'neutral'
+    | 'light'
+    | 'dark'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'danger';
+}
+
+const { type, class: className, ...rest } = Astro.props as Props;
+---
+
+<section
+  {...rest}
+  {...useTheme(type)}
+  class:list={[
+    'container mx-auto box-border',
+    'py-2 md:py-6 lg:py-8 xl:py-12',
+    'px-4 md:px-6 lg:px-8 xl:px-12',
+    'my-2 md:my-6 lg:my-8 xl:my-12',
+    {
+      'bg-primary': type === 'primary',
+      'bg-secondary': type === 'secondary',
+      'bg-transparent': type === 'transparent',
+      'bg-info': type === 'info',
+      'bg-success': type === 'success',
+      'bg-warning': type === 'warning',
+      'bg-danger': type === 'danger',
+      'bg-neutral text-neutral-content': type === 'neutral',
+    },
+    className,
+  ]}
+>
+  <slot />
+</section>

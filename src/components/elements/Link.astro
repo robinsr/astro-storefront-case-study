@@ -1,0 +1,18 @@
+---
+import { SITE_TITLE } from '~/consts';
+
+interface Props {
+  to: string;
+  title?: string;
+  window?: 'same' | 'new';
+  underline?: boolean;
+}
+
+const { to, title = SITE_TITLE, window = 'same', underline = true } = Astro.props;
+
+const target = window === 'new' ? '_blank' : null;
+---
+
+<a href={to} title={title} target={target} class:list={{ underline: underline }}>
+  <slot />
+</a>

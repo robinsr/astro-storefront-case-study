@@ -1,0 +1,119 @@
+---
+import type { HTMLAttributes, HTMLTag, Polymorphic } from 'astro/types';
+import type { ColorVariant, ScreenBreakpoint } from '~/components/types.ts';
+import Icon from './Icon.astro';
+import { fromStateMap } from '~/util/styles';
+
+const buttonTypes = ['button', 'link', 'submit'] as const;
+type ButtonType = (typeof buttonTypes)[number];
+
+const buttonFlags = ['outline', 'join', 'disabled'] as const;
+type ButtonFlags = (typeof buttonFlags)[number];
+type ButtonFlagProps = {
+  [key in ButtonFlags]?: boolean;
+};
+
+type BtnSpecificVariant = 'ghost' | 'link';
+type ButtonVariant = ColorVariant | BtnSpecificVariant;
+type BtnState = 'active' | 'disabled';
+type BtnAnimation = boolean;
+type BtnSize = 'xs' | 'sm' | 'md' | 'lg';
+type BtnSizeMap = Partial<Record<ScreenBreakpoint | 'default', BtnSize>>;
+type BtnShape = 'circle' | 'square';
+type BtnWidth = 'wide' | 'block';
+type BtnIconPosition = 'left' | 'right';
+
+type Props = HTMLAttributes<'button' | 'a'> & {
+  type?: ButtonType;
+  variant?: ButtonVariant;
+  state?: BtnState;
+  animation?: BtnAnimation;
+  size?: BtnSize;
+  sizes?: BtnSizeMap;
+  shape?: BtnShape;
+  width?: BtnWidth;
+  href?: string;
+  round?: string;
+  icon?: string;
+  iconPosition?: BtnIconPosition;
+} & ButtonFlagProps;
+
+const {
+  type = 'button',
+  variant = null,
+  outline = null,
+  state = null,
+  animation = false,
+  size = 'md',
+  sizes = null,
+  shape = null,
+  href = null,
+  width = null,
+  join = false,
+  round = null,
+  icon = null,
+  iconPosition = 'left',
+  disabled = false,
+  class: className,
+  'class:list': classList,
+  ...rest
+} = Astro.props;
+
+const isAnchor = () => type === 'link' || typeof href === 'string';
+
+const getTag = () => {
+  if (isAnchor()) return 'a';
+  return 'button';
+};
+
+const getRoleAttrs = () => {
+  if (isAnchor()) return { role: 'button' };
+  return {};
+};
+
+const btnSizeCls = [size ? `d-btn-${size}` : null, sizes ? fromStateMap(sizes, 'd-btn-') : null]
+  .flat()
+  .filter(Boolean)
+  .join(' ');
+
+const cls = [
+  'd-btn',
+  `d-btn-${variant}`,
+  btnSizeCls,
+  outline ? 'd-btn-outline' : null,
+  state ? `d-btn-${state}` : null,
+  animation ? null : 'd-no-animation',
+  shape ? `d-btn-${shape}` : null,
+  width ? `d-btn-${width}` : null,
+  join ? 'd-join-item' : null,
+  round ? `rounded-${round}` : null,
+  disabled ? 'd-btn-disabled' : null,
+  'current-color',
+  className,
+  classList,
+]
+  .filter(Boolean)
+  .join(' ');
+
+let attrs: Record<string, unknown> = {
+  ...rest,
+  ...getRoleAttrs(),
+};
+
+if (disabled) {
+  attrs = { ...attrs, disabled: true, 'aria-disabled': true };
+}
+
+if (href) {
+  attrs = { ...attrs, href };
+}
+
+const Tag = getTag();
+---
+
+<Tag class:list={cls} {...attrs}>
+  {icon && iconPosition === 'left' ? <Icon name={icon} /> : null}
+  <slot />
+  {icon && iconPosition === 'right' ? <Icon name={icon} /> : null}
+  <slot name="tooltip" />
+</Tag>

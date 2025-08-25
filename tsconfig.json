@@ -1,49 +1,27 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts",
-    "public/**/*",
-    "src/**/*",
-    "tests/**/*"
-  ],
-  "exclude": [
-    "dist"
-  ],
+  "include": [ "src", "tests"],
+  "exclude": ["dist"],
   "compilerOptions": {
-    "esModuleInterop": true,
-    "target": "es2021",
-    "lib": [
-      "es2023",
-      "dom",
-      "dom.iterable"
-    ],
-    "allowImportingTsExtensions": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "strictNullChecks": true,
-    "allowJs": true,
-    "baseUrl": "./",
+    "target": "ES2021",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "src/*"
-      ],
-      "@pkg/*": [
-        "packages/*"
-      ],
-      "@assets/*": [
-        "public/*"
-      ],
-      "@gen/*": [
-        ".shopify/*"
-      ],
-      "@config/*": [
-        "config/*"
-      ],
+      "~/*": ["src/*"],
+      "@pkg/*": ["packages/*"],
+      "@assets/*": ["public/*"],
+      "@gen/*": [".shopify/*"],
+      "@config/*": ["config/*"]
     },
-    "typeRoots": [
-      "node_modules/@types",
-      ".astro/types",
-      ".shopify/types"
-    ],
-  },
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "types": ["astro/client"]
+  }
 }

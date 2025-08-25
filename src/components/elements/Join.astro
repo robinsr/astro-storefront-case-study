@@ -1,0 +1,18 @@
+---
+/*
+ * Join is a container for grouping multiple items, it can be used to group buttons, inputs, or any other element.
+ * Join applies border radius to the first and last item. Join can be used to create a horizontal or vertical list
+ * of items.
+ *
+ * https://daisyui.com/components/join/
+ **/
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {}
+
+const { class: className, 'class:list': classList, ...rest } = Astro.props;
+---
+
+<div class:list={['d-join', classList, className]} {...rest}>
+  <slot />
+</div>

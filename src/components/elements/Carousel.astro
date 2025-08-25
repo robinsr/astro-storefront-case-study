@@ -1,0 +1,103 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon from '~/components/elements/Icon.astro';
+
+interface Props extends HTMLAttributes<'ul'> {
+  items: unknown[];
+  isHero?: boolean;
+}
+
+if (!Astro.slots.has('default')) {
+  throw Error('Carousel component must have at least one child component');
+}
+
+const { items, isHero = false, class: className, ...rest } = Astro.props;
+
+const containerCls = [
+  'flex flex-row items-center',
+  'gap-1 sm:gap-2 lg:gap-3 2xl:gap-4',
+  isHero ? 'relative' : null,
+];
+
+const ctrlCls = [
+  'flex flex-row items-center justify-center',
+  'z-50 h-10 w-10',
+  'cursor-pointer rounded-full bg-base-300'
+];
+
+const ctrlClsL = [
+  ...ctrlCls,
+  isHero ? 'absolute bottom-0 left-4 transform -translate-y-1/2' : null,
+  'scale-75 lg:scale-100',
+];
+
+const ctrlClsR = [
+  ...ctrlCls,
+  isHero ? 'absolute bottom-0 right-4 transform -translate-y-1/2' : null,
+  'scale-75 lg:scale-100',
+];
+
+const itemWrapCls = [
+  'd-carousel-item',
+  isHero ? 'w-full' : 'w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 [&_div]:mx-1',
+];
+---
+
+<div class:list={[ containerCls, className ]} {...rest}>
+  <div class:list={[ ctrlClsL, 'carousel__prev' ]}>
+    <Icon name="lucide:arrow-left" />
+  </div>
+  <div class="d-carousel w-full overflow-scroll">
+    {
+      items.map((item, i) => (
+        <div class:list={itemWrapCls}>
+          <Fragment set:html={Astro.slots.render('default', [item, i])} />
+        </div>
+      ))
+    }
+  </div>
+  <div class:list={[ ctrlClsR, 'carousel__next' ]}>
+    <Icon name="lucide:arrow-right" />
+  </div>
+</div>
+
+<script>
+  const getScrollBy = () => {
+    const innerWidth = document.defaultView?.innerWidth || document.body.clientWidth;
+    switch (true) {
+      case innerWidth < 640:
+        return 300;
+      case innerWidth < 768:
+        return 400;
+      case innerWidth < 1024:
+        return 500;
+      case innerWidth < 1280:
+        return 600;
+      case innerWidth < 1536:
+        return 700;
+      case innerWidth < 1792:
+        return 800;
+      case innerWidth < 2048:
+        return 900;
+      default:
+        return 1000;
+    }
+  };
+
+  document.addEventListener('astro:page-load', () => {
+    const btnPrev = document.querySelectorAll(`.carousel__prev`);
+    const btnNext = document.querySelectorAll(`.carousel__next`);
+
+    Array.from(btnPrev).forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btn.nextElementSibling?.scrollBy({ left: getScrollBy() * -1, behavior: 'smooth' });
+      });
+    });
+
+    Array.from(btnNext).forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btn.previousElementSibling?.scrollBy({ left: getScrollBy(), behavior: 'smooth' });
+      });
+    });
+  });
+</script>

@@ -1,0 +1,45 @@
+---
+/**
+  ContainerGrid uses container query to set the number of columns based on the width of the container.
+  Container queries are broadly supported by browsers. You can check specifics here: https://caniuse.com/container-queries
+*/
+import { type HTMLAttributes } from 'astro/types';
+type Props = HTMLAttributes<'div'> & {
+  gridClass?: string;
+};
+
+const { gridClass, class: className, ...props } = Astro.props;
+
+// Just for reference (do not do string-concatenation or tailwind will not work right)
+// const _tailwindContainerSizes = {
+//   '@xs': '20rem', // 20 * 19 = 380
+//   '@sm': '24rem',
+//   '@md': '28rem',
+//   '@lg': '32rem',
+//   '@xl': '36rem',
+//   '@2xl': '42rem',
+//   '@3xl': '48rem',
+//   '@4xl': '56rem',
+//   '@5xl': '64rem',
+//   '@6xl': '72rem',
+//   '@7xl': '80rem',
+// }
+
+const gridColumns = [
+  // extra-small, single column, beyond which a single column might look weird
+  '@xs/grid:grid-cols-1',
+  // base mobile, two column
+  '@sm/grid:grid-cols-2',
+  // each size up adds on additional column
+  '@lg/grid:grid-cols-3',
+  '@4xl/grid:grid-cols-4',
+  '@5xl/grid:grid-cols-5',
+  '@7xl/grid:grid-cols-6',
+];
+---
+
+<div class:list={['@container/grid', className]} {...props}>
+  <div class:list={['cw-grid', 'grid', 'gap-2', ...gridColumns, gridClass]}>
+    <slot />
+  </div>
+</div>

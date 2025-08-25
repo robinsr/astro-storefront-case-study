@@ -1,0 +1,58 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'input'> {
+  name: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+  disabled?: boolean;
+  checked?: boolean;
+  wrapperClass?: string;
+}
+
+const {
+  name,
+  size = 'md',
+  color = 'primary',
+  disabled = false,
+  checked = false,
+  wrapperClass = '',
+  class: className,
+  ...props
+}: Props = Astro.props;
+---
+
+<div class:list={['d-form-control', wrapperClass]}>
+  <label class="d-label cursor-pointer">
+    <span class="d-label-text mr-2">
+      <slot name="label-left" />
+    </span>
+    <input
+      type="checkbox"
+      class:list={[
+        'd-checkbox',
+        {
+          'd-checkbox-success': color === 'success',
+          'd-checkbox-danger': color === 'danger',
+          'd-checkbox-warning': color === 'warning',
+          'd-checkbox-info': color === 'info',
+          'd-checkbox-light': color === 'light',
+          'd-checkbox-dark': color === 'dark',
+          'd-checkbox-sm': size === 'sm',
+          'd-checkbox-md': size === 'md',
+          'd-checkbox-lg': size === 'lg',
+          'd-checkbox-xl': size === 'xl',
+          'd-checkbox-disabled': disabled,
+          'd-checkbox-checked': checked,
+        },
+        className,
+      ]}
+      disabled={disabled}
+      checked={checked}
+      {...props}
+    />
+    <span class="d-label-text ml-2">
+      <slot />
+    </span>
+  </label>
+</div>

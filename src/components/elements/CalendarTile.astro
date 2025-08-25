@@ -1,0 +1,21 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import type { VEvent } from '~/util/calendar-events.ts';
+
+interface Props {
+  event: VEvent;
+}
+
+const { event } = Astro.props as Props;
+---
+
+<div class="event">
+  <h2 class="eventTitle">{event.summary}</h2>
+  <h3><FormattedDate date={event.start} /></h3>
+  <p>{event.description}</p>
+</div>
+<style>
+  .event {
+    min-width: 25%;
+  }
+</style>

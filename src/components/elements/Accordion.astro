@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Text from './Text.astro';
+
+interface Props extends HTMLAttributes<'div'> {
+  label: string;
+  // name is only required to create groups of collapsible elements (an accordion)
+  name?: string;
+  opened?: boolean;
+}
+
+const { label, name, opened = false } = Astro.props;
+---
+
+<div class="d-collapse d-collapse-arrow rounded-sm bg-base-200">
+  {
+    name ? (
+      <input type="radio" name={name} checked={opened} />
+    ) : (
+      <input type="checkbox" checked={opened} />
+    )
+  }
+  <div class="d-collapse-title">
+    <Text type="body">{label}</Text>
+  </div>
+  <div class="d-collapse-content">
+    <slot />
+  </div>
+</div>

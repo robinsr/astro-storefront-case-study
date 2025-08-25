@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Button from '~/components/elements/Button.astro';
+import Icon from '~/components/elements/Icon.astro';
+
+interface Props extends HTMLAttributes<'button'> {
+  value: string | null;
+}
+
+const { value = '', class: className, 'class:list': classList } = Astro.props;
+---
+
+<Button
+  type="submit"
+  size="md"
+  shape="circle"
+  class:list={['shadow-neutral transition-colors duration-500 ease-in-out', className, classList]}
+  x-data={`cpClipboard('${value}')`}
+  :class="{ 'd-btn-success': copied }"
+  @click="copy()"
+>
+  <Icon
+    color="current"
+    name="lucide:clipboard-copy"
+    x-show="!copied"
+    'x-transition.duration.500ms'
+  />
+  <Icon color="white" name="lucide:check" x-show="copied" 'x-transition.duration.500ms' />
+</Button>
+
+<script>
+  import Alpine from 'alpinejs';
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('cpClipboard', (value: string) => ({
+      value,
+      copied: false,
+      copy() {
+        navigator.clipboard.writeText(this.value);
+        this.copied = true;
+        setTimeout(() => {
+          this.copied = false;
+        }, 2000);
+      },
+    }));
+  });
+</script>

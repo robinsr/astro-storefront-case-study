@@ -1,0 +1,97 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+/**
+ * See: https://hillmann.cc/tailwindcss-bg-patterns/
+ * Working on also getting Heropatterns (https://heropatterns.com/)
+ **/
+
+type Pattern =
+  | 'zigzag'
+  | 'zigzag-3d'
+  | 'boxes'
+  | 'lines'
+  | 'vertical Lines'
+  | 'diagonal Lines'
+  | 'wavy'
+  | 'cross'
+  | 'dots'
+  | 'isometric'
+  | 'rectangles'
+  | 'rhombus'
+  | 'triangles'
+  | 'moon'
+  | 'paper';
+
+type Size = 1 | 2 | 4 | 6 | 8 | 16 | 20 | 24 | 32;
+
+type Opacity = 5 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
+
+interface Props extends HTMLAttributes<'div'> {
+  pattern: Pattern;
+  opacity?: Opacity;
+  size?: Size;
+}
+
+const {
+  pattern,
+  opacity = 50,
+  size = 4,
+  class: className,
+  'class:list': classList,
+  ...props
+} = Astro.props;
+
+const patternCls = [
+  'pattern-bg-white',
+  pattern === 'zigzag' ? 'pattern-zigzag' : null,
+  pattern === 'zigzag-3d' ? 'pattern-zigzag-3d' : null,
+  pattern === 'boxes' ? 'pattern-boxes' : null,
+  pattern === 'lines' ? 'pattern-lines' : null,
+  pattern === 'vertical Lines' ? 'pattern-vertical-lines' : null,
+  pattern === 'diagonal Lines' ? 'pattern-diagonal-lines' : null,
+  pattern === 'wavy' ? 'pattern-wavy' : null,
+  pattern === 'cross' ? 'pattern-cross' : null,
+  pattern === 'dots' ? 'pattern-dots' : null,
+  pattern === 'isometric' ? 'pattern-isometric' : null,
+  pattern === 'rectangles' ? 'pattern-rectangles' : null,
+  pattern === 'rhombus' ? 'pattern-rhombus' : null,
+  pattern === 'triangles' ? 'pattern-triangles' : null,
+  pattern === 'moon' ? 'pattern-moon' : null,
+  pattern === 'paper' ? 'pattern-paper' : null,
+  opacity === 5 ? 'pattern-opacity-5' : null,
+  opacity === 10 ? 'pattern-opacity-10' : null,
+  opacity === 20 ? 'pattern-opacity-20' : null,
+  opacity === 30 ? 'pattern-opacity-30' : null,
+  opacity === 40 ? 'pattern-opacity-40' : null,
+  opacity === 50 ? 'pattern-opacity-50' : null,
+  opacity === 60 ? 'pattern-opacity-60' : null,
+  opacity === 70 ? 'pattern-opacity-70' : null,
+  opacity === 80 ? 'pattern-opacity-80' : null,
+  opacity === 90 ? 'pattern-opacity-90' : null,
+  opacity === 100 ? 'pattern-opacity-100' : null,
+  size === 1 ? 'pattern-size-1' : null,
+  size === 2 ? 'pattern-size-2' : null,
+  size === 4 ? 'pattern-size-4' : null,
+  size === 6 ? 'pattern-size-6' : null,
+  size === 8 ? 'pattern-size-8' : null,
+  size === 16 ? 'pattern-size-16' : null,
+  size === 20 ? 'pattern-size-20' : null,
+  size === 24 ? 'pattern-size-24' : null,
+  size === 32 ? 'pattern-size-32' : null,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div class:list={['relative mb-12 p-4', className, classList]}>
+  <div
+    class:list={[
+      'absolute left-0 top-0 -z-10 h-full w-full',
+      'pattern-bg-white pattern-blue-500',
+      patternCls,
+    ]}
+  >
+  </div>
+  <slot />
+</div>

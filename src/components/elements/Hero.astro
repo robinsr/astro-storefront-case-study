@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { HeroSlide } from '~/util/types';
+import Carousel from '~/components/elements/Carousel.astro';
+
+interface Props extends HTMLAttributes<'div'> {
+  slides: HeroSlide[]
+}
+
+const { slides = [], class: className, 'class:list': classList, ...rest } = Astro.props;
+---
+
+<Carousel isHero={true} items={slides}>
+  {({ imageUrl, imageAlt, url, title, text }: HeroSlide) => (
+      <a href={url}
+        style={{ 'background-image': `url(${imageUrl})` }}
+        class:list={[
+          'd-hero',
+          'min-w-full',
+          'bg-cover bg-center',
+          'min-h-80 max-h-[20vh] md:max-h-[30vh] lg:max-h-[35vh]',
+        ]}>
+        { (text || title) && (
+          <div class="d-hero-overlay bg-opacity-60"></div>
+          <div class="d-hero-content flex flex-col items-start">
+            { title && <h1 class="mb-5 text-5xl font-bold">{title}</h1>}
+            { text && <p class="mb-5">{text}</p> }
+          </div>
+        )}
+      </a>
+  )}
+</Carousel>

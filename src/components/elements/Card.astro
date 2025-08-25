@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  link?: string;
+}
+
+const { link, class: className, ...props } = Astro.props as Props;
+
+const WrapperTag = link ? 'a' : 'div';
+const wrapProps = link ? { href: link } : {};
+
+const hasImage = Astro.slots.has('image');
+---
+
+<div class:list={['sm-4 rounded-lg bg-base-200 sm:p-2', className, 'not-prose']} {...props}>
+  <WrapperTag {...wrapProps}>
+    <div class="group grid h-full grid-cols-1 gap-4 sm:grid-cols-3">
+      {
+        hasImage && (
+          <figure class="card-image h-full flex-col justify-center [&_img]:rounded-md">
+            <slot name="image" />
+          </figure>
+        )
+      }
+      <div
+        class:list={[
+          'flex flex-col justify-center',
+          'sm:group-has-[.card-image]:col-span-2',
+          'p-2 md:p-4 lg:p-5',
+          'sm:col-span-3',
+        ]}
+      >
+        <slot />
+      </div>
+    </div>
+  </WrapperTag>
+</div>

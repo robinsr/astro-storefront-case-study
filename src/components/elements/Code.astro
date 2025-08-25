@@ -1,0 +1,19 @@
+---
+interface Props {
+  data?: object
+}
+
+const data = Astro.props as Props;
+
+const json = (obj: unknown) => JSON.stringify(obj, null, 4);
+---
+
+<p class="raw-data">{json(data)}</p>
+
+<style>
+  .raw-data {
+    font-size: 0.75em;
+    white-space: pre;
+    font-family: monospace;
+  }
+</style>

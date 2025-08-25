@@ -1,0 +1,255 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { CustomSpacing, ScreenBreakpoint } from '../types';
+
+const textTypes = [
+  'body',
+  'callout',
+  'page-h1',
+  'page-h2',
+  'page-h3',
+  'page-h4',
+  'product-title',
+  'product-price',
+  'product-desc',
+  'label',
+  'small',
+  'silly',
+] as const;
+
+type TextType = (typeof textTypes)[number];
+
+type TextTypeProps = {
+  [key in TextType]?: boolean;
+};
+
+type TextSize = 'xs' | 'sm' | 'md' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+
+type TextWeight =
+  | 'thin'
+  | 'light'
+  | 'normal'
+  | 'medium'
+  | 'semibold'
+  | 'bold'
+  | 'extrabold'
+  | 'black';
+
+type TextColor =
+  | 'primary'
+  | 'secondary'
+  | 'accent'
+  | 'base-content'
+  | 'muted'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'current';
+
+type TextAlign = 'left' | 'center' | 'right' | 'justify';
+
+type TextTransform = 'uppercase' | 'lowercase' | 'capitalize' | 'normal-case';
+
+type TextDecoration = 'underline' | 'line-through' | 'no-underline';
+
+type TextClampLines = 1 | 2 | 3;
+
+type Props<Tag extends HTMLTag> = Polymorphic<
+  {
+    as: Tag;
+    type?: TextType;
+    size?: TextSize;
+    spacing?: CustomSpacing;
+    weight?: TextWeight;
+    color?: TextColor;
+    align?: TextAlign;
+    transform?: TextTransform;
+    decoration?: TextDecoration;
+    clampLines?: TextClampLines;
+  } & TextTypeProps
+>;
+
+const getTag = (type: TextType) => {
+  return tagMap[type] || 'p';
+};
+
+const tagMap = {
+  callout: 'p',
+  'page-h1': 'h1',
+  'page-h2': 'h2',
+  'page-h3': 'h3',
+  'page-h4': 'h4',
+  'product-title': 'h1',
+  'product-price': 'p',
+  'product-desc': 'p',
+  label: 'span',
+  silly: 'p',
+  small: 'small',
+  body: 'p',
+} as const;
+
+const proseClass = 'prose dark:prose-invert';
+
+const classMap = {
+  callout: 'text-xl',
+  'page-h1': `${proseClass} prose-2xl font-light text-base-content cw-space-xl`,
+  'page-h2': `${proseClass} prose-xl font-light text-base-content cw-space-lg`,
+  'page-h3': `${proseClass} prose-lg font-light text-base-content cw-space-md`,
+  'page-h4': `${proseClass} prose-md font-light text-base-content cw-space-md`,
+  'product-title': 'text-3xl text-primary',
+  'product-price': 'text-2xl',
+  'product-desc': 'text-base',
+  label: 'text-base',
+  silly: 'text-purple-600',
+  small: 'prose-sm',
+  body: `text-base-content`,
+  prose: `${proseClass} prose-base`,
+} as const;
+
+const sizeMap = {
+  xs: 'text-xs',
+  sm: 'text-sm',
+  md: 'text-base',
+  base: 'text-base',
+  lg: 'text-lg',
+  xl: 'text-xl',
+  '2xl': 'text-2xl',
+  '3xl': 'text-3xl',
+  '4xl': 'text-4xl',
+} as const;
+
+const weightMap = {
+  thin: 'font-thin',
+  light: 'font-light',
+  normal: 'font-normal',
+  medium: 'font-medium',
+  semibold: 'font-semibold',
+  bold: 'font-bold',
+  extrabold: 'font-extrabold',
+  black: 'font-black',
+} as const;
+
+const colorMap = {
+  primary: 'text-primary',
+  secondary: 'text-secondary',
+  accent: 'text-accent',
+  'base-content': 'text-base-content',
+  current: 'text-current',
+  muted: 'text-muted',
+  success: 'text-success',
+  warning: 'text-warning',
+  error: 'text-error',
+} as const;
+
+const alignMap = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+  justify: 'text-justify',
+} as const;
+
+const transformMap = {
+  uppercase: 'uppercase',
+  lowercase: 'lowercase',
+  capitalize: 'capitalize',
+  'normal-case': 'normal-case',
+} as const;
+
+const decorationMap = {
+  underline: 'underline',
+  'line-through': 'line-through',
+  'no-underline': 'no-underline',
+} as const;
+
+const clampLinesMap = {
+  1: 'line-clamp-1',
+  2: 'line-clamp-2',
+  3: 'line-clamp-3',
+} as const;
+
+// Any additional pre-defined attributes on text types
+const attributeMap = {
+  'page-h1': {},
+  'page-h2': {},
+  'page-h3': {},
+  'page-h4': {},
+  'product-title': {},
+  'product-price': {},
+  'product-desc': {},
+  label: {},
+  silly: {},
+  body: {},
+} as const;
+
+const getClass = (type: TextType) => {
+  return classMap[type] || '';
+};
+
+const getSize = (size: TextSize) => {
+  return sizeMap[size] || '';
+};
+
+const getWeight = (weight: TextWeight) => {
+  return weightMap[weight] || '';
+};
+
+const getColor = (color: TextColor) => {
+  return colorMap[color] || '';
+};
+
+const getAlign = (align: TextAlign) => {
+  return alignMap[align] || '';
+};
+
+const getTransform = (transform: TextTransform) => {
+  return transformMap[transform] || '';
+};
+const getDecoration = (decoration: TextDecoration) => {
+  return decorationMap[decoration] || '';
+};
+
+const getClampLines = (clampLines: TextClampLines) => {
+  return clampLinesMap[clampLines] || '';
+};
+
+const getAttributes = (type: TextType) => {
+  return attributeMap[type] || {};
+};
+
+const type =
+  Astro.props.type || Object.keys(Astro.props).find((key) => textTypes.includes(key as any));
+
+const {
+  as: Tag = getTag(type),
+  size,
+  spacing,
+  color,
+  weight,
+  align,
+  transform,
+  decoration,
+  clampLines,
+  class: className,
+  'class:list': classList,
+  ...rest
+} = Astro.props;
+---
+
+<Tag
+  class:list={[
+    getClass(type),
+    getSize(size),
+    getColor(color),
+    getWeight(weight),
+    getAlign(align),
+    getTransform(transform),
+    getDecoration(decoration),
+    getClampLines(clampLines),
+    spacing ? `cw-space-${spacing}` : '',
+    className,
+    classList,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

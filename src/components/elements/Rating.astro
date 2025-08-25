@@ -1,0 +1,100 @@
+---
+import { z } from 'zod';
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  rating: number;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  color?: 'primary' | 'secondary' | 'neutral' | 'current';
+  shape?: 'star-1' | 'star-2' | 'heart';
+  showRating?: boolean;
+}
+
+const clip = (val: number, max: number) => Math.min(Math.max(val, 0), max);
+
+const RatingSchema = z.coerce
+  .number()
+  .default(0)
+  .transform((val) => Math.round(clip(val, 5) * 2) / 2);
+
+const sizeMap = {
+  sm: 'd-rating-sm',
+  md: 'd-rating-md',
+  lg: 'd-rating-lg',
+  xl: 'd-rating-xl',
+};
+
+const maskSizes = {
+  sm: 'h-4 w-2',
+  md: 'h-5 w-2.5',
+  lg: 'h-8 w-4',
+  xl: 'h-10 w-5',
+};
+
+const bgColorMap = {
+  primary: 'bg-primary',
+  secondary: 'bg-secondary',
+  neutral: 'bg-neutral-400',
+  current: 'bg-current',
+};
+
+const textColorMap = {
+  primary: 'text-primary',
+  secondary: 'text-secondary',
+  neutral: 'text-neutral-400',
+  current: 'text-current',
+};
+
+const textSizes = {
+  sm: 'text-base leading-3',
+  md: 'text-lg leading-4',
+  lg: 'text-xl',
+  xl: 'text-3xl',
+};
+
+const shapeMap = {
+  'star-1': 'd-mask-star',
+  'star-2': 'd-mask-star-2',
+  heart: 'd-mask-heart',
+};
+
+const starSpacingClass = 'mr-[0.1em]';
+
+const {
+  rating,
+  size = 'md',
+  color = 'primary',
+  shape = 'star-1',
+  showRating = false,
+  class: className,
+  ...props
+} = Astro.props as Props;
+
+const result = RatingSchema.safeParse(rating);
+
+const ratingValue = result.success ? result.data : 0;
+
+const iconClassList = Array.from({ length: 5 }, (_, i) => {
+  const starValue = i;
+  const starClassL = ratingValue > starValue ? bgColorMap[color] : bgColorMap.neutral;
+  const starClassR = ratingValue > starValue + 0.5 ? bgColorMap[color] : bgColorMap.neutral;
+
+  return [
+    `d-mask ${shapeMap[shape]} d-mask-half-1 ${maskSizes[size]} ${starClassL} `,
+    `d-mask ${shapeMap[shape]} d-mask-half-2 ${maskSizes[size]} ${starClassR} ${starSpacingClass}`,
+  ];
+}).flat();
+---
+
+<div class="flex w-fit flex-row items-end gap-3">
+  <div class:list={['d-rating', sizeMap[size], className]} {...props}>
+    {iconClassList.map((starClass) => <i class={starClass} />)}
+  </div>
+  {
+    showRating && (
+      <div class:list={['', starSpacingClass]}>
+        <p class:list={['m-0', textSizes[size], textColorMap[color]]}>{ratingValue}</p>
+      </div>
+    )
+  }
+</div>
