@@ -11,10 +11,16 @@
   "dependencies": {
     "@astrojs/node": "^9.4.3",
     "@lucide/astro": "^0.541.0",
+    "@tailwindcss/aspect-ratio": "0.4.2",
+    "@tailwindcss/container-queries": "0.1.1",
+    "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.12",
     "alpinejs": "3.13.3",
     "astro": "^5.13.3",
+    "astro-icon": "^1.1.5",
+    "daisyui": "5.0.50",
     "tailwindcss": "^4.1.12",
+    "tailwindcss-bg-patterns": "0.3.0",
     "zod": "^4.1.1"
   },
   "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"

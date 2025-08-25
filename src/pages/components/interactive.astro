@@ -1,0 +1,278 @@
+---
+import Layout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/elements/Container.astro';
+import Text from '~/components/elements/Text.astro';
+import Button from '~/components/elements/Button.astro';
+import Checkbox from '~/components/elements/Checkbox.astro';
+import Modal from '~/components/elements/Modal.astro';
+import Accordion from '~/components/elements/Accordion.astro';
+import Tabs from '~/components/elements/Tabs.astro';
+import Carousel from '~/components/elements/Carousel.astro';
+import Grid from '~/components/elements/Grid.astro';
+import Card from '~/components/elements/Card.astro';
+---
+
+<Layout title="Interactive Components Test">
+  <Container type="primary">
+    <Text type="page-h1">Interactive Components</Text>
+    <Text type="body" class="mb-8">
+      Testing Button, Checkbox, Modal, Accordion, Tabs, and Carousel components
+    </Text>
+  </Container>
+
+  <Container type="secondary">
+    <Text type="page-h2">Button Components</Text>
+    <Text type="body" class="mb-4">
+      Various button styles, sizes, and variants
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Button Variants</Text>
+        <div class="flex flex-wrap gap-2">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="accent">Accent</Button>
+          <Button variant="neutral">Neutral</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="link">Link</Button>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Button Sizes</Text>
+        <div class="flex flex-wrap gap-2 items-center">
+          <Button size="xs">Extra Small</Button>
+          <Button size="sm">Small</Button>
+          <Button size="md">Medium</Button>
+          <Button size="lg">Large</Button>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Button States</Text>
+        <div class="flex flex-wrap gap-2">
+          <Button state="active">Active</Button>
+          <Button state="disabled">Disabled</Button>
+          <Button outline>Outline</Button>
+          <Button animation={false}>No Animation</Button>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Button Shapes</Text>
+        <div class="flex flex-wrap gap-2">
+          <Button shape="circle">●</Button>
+          <Button shape="square">■</Button>
+          <Button round="full">Rounded</Button>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Button with Icons</Text>
+        <div class="flex flex-wrap gap-2">
+          <Button icon="lucide:heart" iconPosition="left">Like</Button>
+          <Button icon="lucide:share" iconPosition="right">Share</Button>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Button Widths</Text>
+        <div class="flex flex-col gap-2">
+          <Button width="wide">Wide Button</Button>
+          <Button width="block">Block Button</Button>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Join Buttons</Text>
+        <div class="flex">
+          <Button join class="rounded-r-none">Left</Button>
+          <Button join class="rounded-none">Middle</Button>
+          <Button join class="rounded-l-none">Right</Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="light">
+    <Text type="page-h2">Form Components</Text>
+    <Text type="body" class="mb-4">
+      Checkbox and form input components
+    </Text>
+
+    <div class="space-y-4">
+      <div>
+        <Text type="page-h4" class="mb-3">Checkbox Variants</Text>
+        <div class="space-y-2">
+          <Checkbox name="checkbox1" color="primary">
+            <span slot="label-left">Primary Checkbox</span>
+          </Checkbox>
+
+          <Checkbox name="checkbox2" color="success">
+            <span slot="label-left">Success Checkbox</span>
+          </Checkbox>
+
+          <Checkbox name="checkbox3" color="warning">
+            <span slot="label-left">Warning Checkbox</span>
+          </Checkbox>
+
+          <Checkbox name="checkbox4" color="danger">
+            <span slot="label-left">Danger Checkbox</span>
+          </Checkbox>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Checkbox Sizes</Text>
+        <div class="space-y-2">
+          <Checkbox name="size1" size="sm">
+            <span slot="label-left">Small</span>
+          </Checkbox>
+
+          <Checkbox name="size2" size="md">
+            <span slot="label-left">Medium</span>
+          </Checkbox>
+
+          <Checkbox name="size3" size="lg">
+            <span slot="label-left">Large</span>
+          </Checkbox>
+
+          <Checkbox name="size4" size="xl">
+            <span slot="label-left">Extra Large</span>
+          </Checkbox>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Checkbox States</Text>
+        <div class="space-y-2">
+          <Checkbox name="state1" checked={true}>
+            <span slot="label-left">Checked</span>
+          </Checkbox>
+
+          <Checkbox name="state2" disabled={true}>
+            <span slot="label-left">Disabled</span>
+          </Checkbox>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="info">
+    <Text type="page-h2">Modal Components</Text>
+    <Text type="body" class="mb-4">
+      Modal dialogs with different configurations
+    </Text>
+
+    <div class="space-y-4">
+      <div>
+        <Button onclick="modal1.showModal()">Open Modal (Outside Close)</Button>
+        <Modal id="modal1" closeMethod="outside">
+          <Text type="page-h3">Modal Title</Text>
+          <Text type="body">This modal can be closed by clicking outside or pressing ESC.</Text>
+        </Modal>
+      </div>
+
+      <div>
+        <Button onclick="modal2.showModal()">Open Modal (Button Close)</Button>
+        <Modal id="modal2" closeMethod="button">
+          <Text type="page-h3">Modal with Close Button</Text>
+          <Text type="body">This modal has a close button and requires explicit closing.</Text>
+          <Button slot="close-button">Close</Button>
+        </Modal>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="success">
+    <Text type="page-h2">Accordion Components</Text>
+    <Text type="body" class="mb-4">
+      Collapsible content sections
+    </Text>
+
+    <div class="space-y-4">
+      <Accordion label="Single Accordion Item">
+        <Text type="body">This is the content of a single accordion item.</Text>
+      </Accordion>
+
+      <Accordion label="Accordion Group Item 1" name="group1" opened={true}>
+        <Text type="body">This is the first item in an accordion group. It's open by default.</Text>
+      </Accordion>
+
+      <Accordion label="Accordion Group Item 2" name="group1">
+        <Text type="body">This is the second item in the same accordion group.</Text>
+      </Accordion>
+
+      <Accordion label="Accordion Group Item 3" name="group1">
+        <Text type="body">This is the third item in the same accordion group.</Text>
+      </Accordion>
+    </div>
+  </Container>
+
+  <Container type="warning">
+    <Text type="page-h2">Tabs Component</Text>
+    <Text type="body" class="mb-4">
+      Tab navigation (currently static - needs JavaScript implementation)
+    </Text>
+
+    <Tabs />
+
+    <Text type="body" class="mt-4 text-sm opacity-70">
+      Note: Tabs component is currently static and needs JavaScript implementation for full functionality.
+    </Text>
+  </Container>
+
+  <Container type="danger">
+    <Text type="page-h2">Carousel Component</Text>
+    <Text type="body" class="mb-4">
+      Horizontal scrolling carousel with navigation
+    </Text>
+
+    <Carousel items={[1, 2, 3, 4, 5, 6, 7, 8]}>
+      {({ item, index }) => (
+        <Card>
+          <div class="p-4 text-center">
+            <Text type="page-h4">Item {index + 1}</Text>
+            <Text type="body">Carousel item content</Text>
+          </div>
+        </Card>
+      )}
+    </Carousel>
+  </Container>
+
+  <Container>
+    <Text type="page-h2">Interactive Combinations</Text>
+    <Text type="body" class="mb-4">
+      Combining multiple interactive components
+    </Text>
+
+    <Grid>
+      <Card>
+        <Text type="page-h4">Form Example</Text>
+        <div class="space-y-3">
+          <Checkbox name="agree" color="primary">
+            <span slot="label-left">I agree to terms</span>
+          </Checkbox>
+          <Button variant="primary" size="sm" width="block">Submit</Button>
+        </div>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Action Example</Text>
+        <div class="space-y-3">
+          <Button variant="secondary" size="sm">Cancel</Button>
+          <Button variant="primary" size="sm">Confirm</Button>
+        </div>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Navigation Example</Text>
+        <div class="space-y-3">
+          <Button variant="ghost" size="sm" width="block">Previous</Button>
+          <Button variant="ghost" size="sm" width="block">Next</Button>
+        </div>
+      </Card>
+    </Grid>
+  </Container>
+</Layout>

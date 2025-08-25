@@ -1,0 +1,427 @@
+---
+import Layout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/elements/Container.astro';
+import Text from '~/components/elements/Text.astro';
+import Divider from '~/components/elements/Divider.astro';
+import Pattern from '~/components/elements/Pattern.astro';
+import Rating from '~/components/elements/Rating.astro';
+import Hero from '~/components/elements/Hero.astro';
+import Grid from '~/components/elements/Grid.astro';
+import Card from '~/components/elements/Card.astro';
+---
+
+<Layout title="Visual Elements Test">
+  <Container type="primary">
+    <Text type="page-h1">Visual Elements</Text>
+    <Text type="body" class="mb-8">
+      Testing Divider, Pattern, Rating, and Hero components
+    </Text>
+  </Container>
+
+  <Container type="secondary">
+    <Text type="page-h2">Divider Components</Text>
+    <Text type="body" class="mb-4">
+      Various divider styles and configurations
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Basic Dividers</Text>
+        <div class="space-y-4">
+          <Text type="body">Content above divider</Text>
+          <Divider />
+          <Text type="body">Content below divider</Text>
+
+          <Text type="body">Content above divider with text</Text>
+          <Divider>OR</Divider>
+          <Text type="body">Content below divider</Text>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Divider Variants</Text>
+        <div class="space-y-4">
+          <Text type="body">Primary divider</Text>
+          <Divider variant="primary">Primary</Divider>
+
+          <Text type="body">Secondary divider</Text>
+          <Divider variant="secondary">Secondary</Divider>
+
+          <Text type="body">Accent divider</Text>
+          <Divider variant="accent">Accent</Divider>
+
+          <Text type="body">Neutral divider</Text>
+          <Divider variant="neutral">Neutral</Divider>
+
+          <Text type="body">Info divider</Text>
+          <Divider variant="info">Info</Divider>
+
+          <Text type="body">Success divider</Text>
+          <Divider variant="success">Success</Divider>
+
+          <Text type="body">Warning divider</Text>
+          <Divider variant="warning">Warning</Divider>
+
+          <Text type="body">Error divider</Text>
+          <Divider variant="error">Error</Divider>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Divider Text Positions</Text>
+        <div class="space-y-4">
+          <Text type="body">Start position</Text>
+          <Divider textPosition="start">Start</Divider>
+
+          <Text type="body">Center position (default)</Text>
+          <Divider textPosition="center">Center</Divider>
+
+          <Text type="body">End position</Text>
+          <Divider textPosition="end">End</Divider>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Horizontal Dividers</Text>
+        <div class="space-y-4">
+          <Text type="body">Vertical divider (default)</Text>
+          <Divider>Vertical</Divider>
+
+          <Text type="body">Horizontal divider</Text>
+          <Divider horizontal={true}>Horizontal</Divider>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Responsive Horizontal Dividers</Text>
+        <div class="space-y-4">
+          <Text type="body">Horizontal at small screens</Text>
+          <Divider horizontalAt="sm">Small</Divider>
+
+          <Text type="body">Horizontal at medium screens</Text>
+          <Divider horizontalAt="md">Medium</Divider>
+
+          <Text type="body">Horizontal at large screens</Text>
+          <Divider horizontalAt="lg">Large</Divider>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Container Dividers</Text>
+        <div class="space-y-4">
+          <Divider container={true} containerGap="lg">
+            <div slot="top-left">
+              <Text type="body">Left content</Text>
+            </div>
+            <div slot="bottom-right">
+              <Text type="body">Right content</Text>
+            </div>
+          </Divider>
+
+          <Divider container={true} horizontalAt="md" containerGap="md">
+            <div slot="top-left">
+              <Text type="body">Top content</Text>
+            </div>
+            <Text>Container divider with responsive behavior</Text>
+            <div slot="bottom-right">
+              <Text type="body">Bottom content</Text>
+            </div>
+          </Divider>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Divider Spacing</Text>
+        <div class="space-y-4">
+          <Text type="body">No spacing</Text>
+          <Divider spacing="none">No Space</Divider>
+
+          <Text type="body">Extra small spacing</Text>
+          <Divider spacing="xs">XS Space</Divider>
+
+          <Text type="body">Small spacing</Text>
+          <Divider spacing="sm">SM Space</Divider>
+
+          <Text type="body">Base spacing (default)</Text>
+          <Divider spacing="base">Base Space</Divider>
+
+          <Text type="body">Large spacing</Text>
+          <Divider spacing="lg">LG Space</Divider>
+
+          <Text type="body">Extra large spacing</Text>
+          <Divider spacing="xl">XL Space</Divider>
+
+          <Text type="body">2XL spacing</Text>
+          <Divider spacing="2xl">2XL Space</Divider>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="light">
+    <Text type="page-h2">Pattern Components</Text>
+    <Text type="body" class="mb-4">
+      Background patterns with different styles and configurations
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Pattern Types</Text>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Pattern pattern="zigzag" size={8} opacity={30}>
+            <Text type="body">Zigzag pattern</Text>
+          </Pattern>
+
+          <Pattern pattern="dots" size={16} opacity={40}>
+            <Text type="body">Dots pattern</Text>
+          </Pattern>
+
+          <Pattern pattern="lines" size={6} opacity={50}>
+            <Text type="body">Lines pattern</Text>
+          </Pattern>
+
+          <Pattern pattern="triangles" size={12} opacity={60}>
+            <Text type="body">Triangles pattern</Text>
+          </Pattern>
+
+          <Pattern pattern="boxes" size={8} opacity={35}>
+            <Text type="body">Boxes pattern</Text>
+          </Pattern>
+
+          <Pattern pattern="cross" size={10} opacity={45}>
+            <Text type="body">Cross pattern</Text>
+          </Pattern>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Pattern Sizes</Text>
+        <div class="space-y-4">
+          <Pattern pattern="dots" size={4} opacity={50}>
+            <Text type="body">Small dots (size 4)</Text>
+          </Pattern>
+
+          <Pattern pattern="dots" size={8} opacity={50}>
+            <Text type="body">Medium dots (size 8)</Text>
+          </Pattern>
+
+          <Pattern pattern="dots" size={16} opacity={50}>
+            <Text type="body">Large dots (size 16)</Text>
+          </Pattern>
+
+          <Pattern pattern="dots" size={32} opacity={50}>
+            <Text type="body">Extra large dots (size 32)</Text>
+          </Pattern>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Pattern Opacity</Text>
+        <div class="space-y-4">
+          <Pattern pattern="zigzag" size={8} opacity={10}>
+            <Text type="body">Low opacity (10%)</Text>
+          </Pattern>
+
+          <Pattern pattern="zigzag" size={8} opacity={30}>
+            <Text type="body">Medium opacity (30%)</Text>
+          </Pattern>
+
+          <Pattern pattern="zigzag" size={8} opacity={60}>
+            <Text type="body">High opacity (60%)</Text>
+          </Pattern>
+
+          <Pattern pattern="zigzag" size={8} opacity={90}>
+            <Text type="body">Very high opacity (90%)</Text>
+          </Pattern>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="info">
+    <Text type="page-h2">Rating Components</Text>
+    <Text type="body" class="mb-4">
+      Star and heart rating systems with various configurations
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Rating Values</Text>
+        <div class="space-y-2">
+          <div class="flex items-center gap-4">
+            <Text type="body">0.0:</Text>
+            <Rating rating={0} />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">1.0:</Text>
+            <Rating rating={1} />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">2.5:</Text>
+            <Rating rating={2.5} />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">3.0:</Text>
+            <Rating rating={3} />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">4.5:</Text>
+            <Rating rating={4.5} />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">5.0:</Text>
+            <Rating rating={5} />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Rating Sizes</Text>
+        <div class="space-y-2">
+          <div class="flex items-center gap-4">
+            <Text type="body">Small:</Text>
+            <Rating rating={4} size="sm" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">Medium:</Text>
+            <Rating rating={4} size="md" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">Large:</Text>
+            <Rating rating={4} size="lg" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">Extra Large:</Text>
+            <Rating rating={4} size="xl" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Rating Colors</Text>
+        <div class="space-y-2">
+          <div class="flex items-center gap-4">
+            <Text type="body">Primary:</Text>
+            <Rating rating={4} color="primary" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">Secondary:</Text>
+            <Rating rating={4} color="secondary" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">Neutral:</Text>
+            <Rating rating={4} color="neutral" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">Current:</Text>
+            <Rating rating={4} color="current" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Rating Shapes</Text>
+        <div class="space-y-2">
+          <div class="flex items-center gap-4">
+            <Text type="body">Star 1:</Text>
+            <Rating rating={4} shape="star-1" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">Star 2:</Text>
+            <Rating rating={4} shape="star-2" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <Text type="body">Heart:</Text>
+            <Rating rating={4} shape="heart" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Rating with Text</Text>
+        <div class="space-y-2">
+          <Rating rating={4.2} showRating={true} />
+          <Rating rating={3.8} showRating={true} color="secondary" />
+          <Rating rating={5.0} showRating={true} color="success" />
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="success">
+    <Text type="page-h2">Hero Component</Text>
+    <Text type="body" class="mb-4">
+      Hero carousel with different slide configurations
+    </Text>
+
+    <Hero slides={[
+      {
+        imageUrl: 'https://via.placeholder.com/1200x400/3B82F6/FFFFFF?text=Hero+Slide+1',
+        imageAlt: 'Hero slide 1',
+        url: '#',
+        title: 'Welcome to Our Site',
+        text: 'This is the first hero slide with title and description'
+      },
+      {
+        imageUrl: 'https://via.placeholder.com/1200x400/10B981/FFFFFF?text=Hero+Slide+2',
+        imageAlt: 'Hero slide 2',
+        url: '#',
+        title: 'Amazing Features',
+        text: 'Discover what makes our platform special'
+      },
+      {
+        imageUrl: 'https://via.placeholder.com/1200x400/F59E0B/FFFFFF?text=Hero+Slide+3',
+        imageAlt: 'Hero slide 3',
+        url: '#',
+        title: 'Get Started Today',
+        text: 'Join thousands of satisfied customers'
+      }
+    ]} />
+  </Container>
+
+  <Container>
+    <Text type="page-h2">Visual Combinations</Text>
+    <Text type="body" class="mb-4">
+      Combining different visual elements for rich layouts
+    </Text>
+
+    <Grid>
+      <Card>
+        <Text type="page-h4">Card with Pattern</Text>
+        <Pattern pattern="dots" size={6} opacity={20}>
+          <Text type="body">This card has a subtle dot pattern background</Text>
+        </Pattern>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Card with Rating</Text>
+        <Text type="body" class="mb-3">Product rating:</Text>
+        <Rating rating={4.5} showRating={true} color="primary" />
+        <Divider spacing="sm" class="my-3" />
+        <Text type="body">Great product with excellent reviews</Text>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Card with Dividers</Text>
+        <Text type="body">Top content</Text>
+        <Divider spacing="xs" variant="primary" />
+        <Text type="body">Middle content</Text>
+        <Divider spacing="xs" variant="secondary" />
+        <Text type="body">Bottom content</Text>
+      </Card>
+    </Grid>
+  </Container>
+</Layout>

@@ -1,0 +1,264 @@
+---
+import Layout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/elements/Container.astro';
+import Text from '~/components/elements/Text.astro';
+import PageTitle from '~/components/elements/PageTitle.astro';
+import FormattedDate from '~/components/elements/FormattedDate.astro';
+import Grid from '~/components/elements/Grid.astro';
+import Card from '~/components/elements/Card.astro';
+---
+
+<Layout title="Typography Components Test">
+  <Container type="primary">
+    <Text type="page-h1">Typography Components</Text>
+    <Text type="body" class="mb-8">
+      Testing Text, PageTitle, and FormattedDate components
+    </Text>
+  </Container>
+
+  <Container type="secondary">
+    <Text type="page-h2">Text Component Types</Text>
+    <Text type="body" class="mb-4">
+      Different text types with predefined styles and semantic meaning
+    </Text>
+
+    <div class="space-y-4">
+      <Text type="page-h1">Page Heading 1</Text>
+      <Text type="page-h2">Page Heading 2</Text>
+      <Text type="page-h3">Page Heading 3</Text>
+      <Text type="page-h4">Page Heading 4</Text>
+
+      <Text type="body">Body text for general content</Text>
+      <Text type="callout">Callout text for important information</Text>
+      <Text type="label">Label text for form elements</Text>
+      <Text type="small">Small text for secondary information</Text>
+      <Text type="silly">Silly text with purple styling</Text>
+
+      <Text type="product-title">Product Title</Text>
+      <Text type="product-price">$99.99</Text>
+      <Text type="product-desc">Product description text</Text>
+    </div>
+  </Container>
+
+  <Container type="light">
+    <Text type="page-h2">Text Sizes</Text>
+    <Text type="body" class="mb-4">
+      Various text sizes from extra small to extra large
+    </Text>
+
+    <div class="space-y-2">
+      <Text size="xs">Extra Small Text (xs)</Text>
+      <Text size="sm">Small Text (sm)</Text>
+      <Text size="md">Medium Text (md)</Text>
+      <Text size="base">Base Text (base)</Text>
+      <Text size="lg">Large Text (lg)</Text>
+      <Text size="xl">Extra Large Text (xl)</Text>
+      <Text size="2xl">2XL Text (2xl)</Text>
+      <Text size="3xl">3XL Text (3xl)</Text>
+      <Text size="4xl">4XL Text (4xl)</Text>
+    </div>
+  </Container>
+
+  <Container type="info">
+    <Text type="page-h2">Text Weights</Text>
+    <Text type="body" class="mb-4">
+      Different font weights for emphasis and hierarchy
+    </Text>
+
+    <div class="space-y-2">
+      <Text weight="thin">Thin weight text</Text>
+      <Text weight="light">Light weight text</Text>
+      <Text weight="normal">Normal weight text</Text>
+      <Text weight="medium">Medium weight text</Text>
+      <Text weight="semibold">Semibold weight text</Text>
+      <Text weight="bold">Bold weight text</Text>
+      <Text weight="extrabold">Extrabold weight text</Text>
+      <Text weight="black">Black weight text</Text>
+    </div>
+  </Container>
+
+  <Container type="success">
+    <Text type="page-h2">Text Colors</Text>
+    <Text type="body" class="mb-4">
+      Various color variants for different contexts
+    </Text>
+
+    <div class="space-y-2">
+      <Text color="primary">Primary color text</Text>
+      <Text color="secondary">Secondary color text</Text>
+      <Text color="accent">Accent color text</Text>
+      <Text color="base-content">Base content color text</Text>
+      <Text color="muted">Muted color text</Text>
+      <Text color="success">Success color text</Text>
+      <Text color="warning">Warning color text</Text>
+      <Text color="error">Error color text</Text>
+      <Text color="current">Current color text</Text>
+    </div>
+  </Container>
+
+  <Container type="warning">
+    <Text type="page-h2">Text Alignment</Text>
+    <Text type="body" class="mb-4">
+      Different text alignment options
+    </Text>
+
+    <div class="space-y-4">
+      <Text align="left">Left aligned text</Text>
+      <Text align="center">Center aligned text</Text>
+      <Text align="right">Right aligned text</Text>
+      <Text align="justify">
+        Justified text that spreads across the full width of its container.
+        This creates even spacing between words and creates a clean,
+        professional appearance for longer text blocks.
+      </Text>
+    </div>
+  </Container>
+
+  <Container type="danger">
+    <Text type="page-h2">Text Transformations</Text>
+    <Text type="body" class="mb-4">
+      Text case transformations and decorations
+    </Text>
+
+    <div class="space-y-2">
+      <Text transform="uppercase">Uppercase text</Text>
+      <Text transform="lowercase">Lowercase text</Text>
+      <Text transform="capitalize">Capitalize text</Text>
+      <Text transform="normal-case">Normal case text</Text>
+
+      <div class="mt-4 space-y-2">
+        <Text decoration="underline">Underlined text</Text>
+        <Text decoration="line-through">Line through text</Text>
+        <Text decoration="no-underline">No underline text</Text>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="neutral">
+    <Text type="page-h2">Text Clamping</Text>
+    <Text type="body" class="mb-4">
+      Text with line clamping to control overflow
+    </Text>
+
+    <div class="space-y-4">
+      <div class="max-w-md">
+        <Text type="body" class="mb-2">Single line clamp:</Text>
+        <Text clampLines={1}>
+          This is a very long text that will be clamped to a single line.
+          It demonstrates how the line-clamp utility works with the Text component.
+        </Text>
+      </div>
+
+      <div class="max-w-md">
+        <Text type="body" class="mb-2">Two line clamp:</Text>
+        <Text clampLines={2}>
+          This is a very long text that will be clamped to two lines.
+          It demonstrates how the line-clamp utility works with the Text component
+          and shows how it handles longer content gracefully.
+        </Text>
+      </div>
+
+      <div class="max-w-md">
+        <Text type="body" class="mb-2">Three line clamp:</Text>
+        <Text clampLines={3}>
+          This is a very long text that will be clamped to three lines.
+          It demonstrates how the line-clamp utility works with the Text component
+          and shows how it handles longer content gracefully while maintaining
+          readability and visual hierarchy.
+        </Text>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="accent">
+    <Text type="page-h2">PageTitle Component</Text>
+    <Text type="body" class="mb-4">
+      PageTitle component with different configurations
+    </Text>
+
+    <div class="space-y-6">
+      <PageTitle title="Simple Page Title" />
+
+      <PageTitle>
+        <Text type="page-h1">Custom Page Title</Text>
+      </PageTitle>
+
+      <PageTitle>
+        <Text type="page-h1">Page Title with Subtitle</Text>
+        <Text type="body" slot="sub-title">This is a subtitle for the page</Text>
+      </PageTitle>
+
+      <PageTitle>
+        <Text type="page-h1">Page Title with Content</Text>
+        <Text type="body" slot="content">Additional content below the title</Text>
+        <div slot="footer" class="mt-4">
+          <Text type="small" color="muted">Footer content for the title section</Text>
+        </div>
+      </PageTitle>
+    </div>
+  </Container>
+
+  <Container>
+    <Text type="page-h2">FormattedDate Component</Text>
+    <Text type="body" class="mb-4">
+      Date formatting with different date values
+    </Text>
+
+    <div class="space-y-2">
+      <div>
+        <Text type="body" class="mb-1">Today:</Text>
+        <FormattedDate date={new Date()} />
+      </div>
+
+      <div>
+        <Text type="body" class="mb-1">Past date:</Text>
+        <FormattedDate date={new Date('2023-12-25')} />
+      </div>
+
+      <div>
+        <Text type="body" class="mb-1">Future date:</Text>
+        <FormattedDate date={new Date('2025-06-15')} />
+      </div>
+
+      <div>
+        <Text type="body" class="mb-1">Leap year date:</Text>
+        <FormattedDate date={new Date('2024-02-29')} />
+      </div>
+    </div>
+  </Container>
+
+  <Container type="light">
+    <Text type="page-h2">Typography Combinations</Text>
+    <Text type="body" class="mb-4">
+      Combining different typography components and styles
+    </Text>
+
+    <Grid>
+      <Card>
+        <Text type="page-h4" color="primary">Card Heading</Text>
+        <Text type="body" size="sm" color="muted">
+          This card demonstrates how different text components work together.
+        </Text>
+        <Text type="small" color="success" class="mt-2">
+          Success message text
+        </Text>
+      </Card>
+
+      <Card>
+        <Text type="product-title">Product Name</Text>
+        <Text type="product-price" color="primary">$149.99</Text>
+        <Text type="product-desc" size="sm" color="muted">
+          Product description with multiple text styles
+        </Text>
+      </Card>
+
+      <Card>
+        <Text type="callout" weight="semibold">Important Notice</Text>
+        <Text type="body" size="sm">
+          This is a callout with body text below it.
+        </Text>
+        <Text type="label" color="info">Info label</Text>
+      </Card>
+    </Grid>
+  </Container>
+</Layout>

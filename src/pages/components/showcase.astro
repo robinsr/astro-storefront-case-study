@@ -1,0 +1,415 @@
+---
+import Layout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/elements/Container.astro';
+import Text from '~/components/elements/Text.astro';
+import Button from '~/components/elements/Button.astro';
+import Checkbox from '~/components/elements/Checkbox.astro';
+import Modal from '~/components/elements/Modal.astro';
+import Accordion from '~/components/elements/Accordion.astro';
+import Tabs from '~/components/elements/Tabs.astro';
+import Carousel from '~/components/elements/Carousel.astro';
+import Grid from '~/components/elements/Grid.astro';
+import Card from '~/components/elements/Card.astro';
+import ContainerGrid from '~/components/elements/ContainerGrid.astro';
+import PageTitle from '~/components/elements/PageTitle.astro';
+import FormattedDate from '~/components/elements/FormattedDate.astro';
+import Divider from '~/components/elements/Divider.astro';
+import Pattern from '~/components/elements/Pattern.astro';
+import Rating from '~/components/elements/Rating.astro';
+import Hero from '~/components/elements/Hero.astro';
+import CopyButton from '~/components/elements/CopyButton.astro';
+import SlotList from '~/components/elements/SlotList.astro';
+import Code from '~/components/elements/Code.astro';
+import Join from '~/components/elements/Join.astro';
+---
+
+<Layout title="Complete Component Showcase">
+  <PageTitle title="Complete Component Showcase">
+    <Text type="body" slot="sub-title">
+      A comprehensive demonstration of all UI primitives and components
+    </Text>
+  </PageTitle>
+
+  <Container type="primary">
+    <Text type="page-h2">Layout & Structure</Text>
+    <Text type="body" class="mb-6">
+      Foundation components for building page layouts
+    </Text>
+
+    <ContainerGrid>
+      <Card>
+        <Text type="page-h4">Container Types</Text>
+        <div class="space-y-2">
+          <Container type="transparent" class="p-2">
+            <Text type="body" size="sm">Transparent</Text>
+          </Container>
+          <Container type="neutral" class="p-2">
+            <Text type="body" size="sm">Neutral</Text>
+          </Container>
+          <Container type="info" class="p-2">
+            <Text type="body" size="sm">Info</Text>
+          </Container>
+        </div>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Grid System</Text>
+        <Grid>
+          <div class="p-2 bg-base-200 rounded text-center text-xs">1</div>
+          <div class="p-2 bg-base-200 rounded text-center text-xs">2</div>
+          <div class="p-2 bg-base-200 rounded text-center text-xs">3</div>
+        </Grid>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Container Grid</Text>
+        <ContainerGrid>
+          <div class="p-2 bg-base-200 rounded text-center text-xs">A</div>
+          <div class="p-2 bg-base-200 rounded text-center text-xs">B</div>
+          <div class="p-2 bg-base-200 rounded text-center text-xs">C</div>
+        </ContainerGrid>
+      </Card>
+    </ContainerGrid>
+  </Container>
+
+  <Container type="secondary">
+    <Text type="page-h2">Typography System</Text>
+    <Text type="body" class="mb-6">
+      Text components with consistent styling and hierarchy
+    </Text>
+
+    <div class="space-y-4">
+      <Text type="page-h1">Page Heading 1</Text>
+      <Text type="page-h2">Page Heading 2</Text>
+      <Text type="page-h3">Page Heading 3</Text>
+      <Text type="page-h4">Page Heading 4</Text>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Text type="body">Body text for general content</Text>
+          <Text type="callout">Callout text for important information</Text>
+          <Text type="label">Label text for form elements</Text>
+        </div>
+        <div>
+          <Text type="product-title">Product Title</Text>
+          <Text type="product-price">$99.99</Text>
+          <Text type="product-desc">Product description text</Text>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <Text type="body">Today:</Text>
+        <FormattedDate date={new Date()} />
+      </div>
+    </div>
+  </Container>
+
+  <Container type="light">
+    <Text type="page-h2">Interactive Elements</Text>
+    <Text type="body" class="mb-6">
+      Buttons, forms, and interactive components
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Button Variants</Text>
+        <div class="flex flex-wrap gap-2">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="accent">Accent</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="link">Link</Button>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Button Sizes</Text>
+        <div class="flex flex-wrap gap-2 items-center">
+          <Button size="xs">XS</Button>
+          <Button size="sm">SM</Button>
+          <Button size="md">MD</Button>
+          <Button size="lg">LG</Button>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Form Elements</Text>
+        <div class="space-y-3">
+          <Checkbox name="agree" color="primary">
+            <span slot="label-left">I agree to terms</span>
+          </Checkbox>
+          <Checkbox name="newsletter" color="success">
+            <span slot="label-left">Subscribe to newsletter</span>
+          </Checkbox>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Modals</Text>
+        <div class="space-y-2">
+          <Button onclick="showcaseModal1.showModal()">Open Modal</Button>
+          <Modal id="showcaseModal1" closeMethod="outside">
+            <Text type="page-h3">Showcase Modal</Text>
+            <Text type="body">This modal demonstrates the modal component functionality.</Text>
+          </Modal>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="info">
+    <Text type="page-h2">Content Organization</Text>
+    <Text type="body" class="mb-6">
+      Components for organizing and displaying content
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Accordion</Text>
+        <Accordion label="Click to expand" name="showcase">
+          <Text type="body">This accordion demonstrates collapsible content sections.</Text>
+        </Accordion>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Tabs</Text>
+        <Tabs />
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Carousel</Text>
+        <Carousel items={[1, 2, 3, 4]}>
+          {({ item, index }) => (
+            <Card>
+              <div class="p-4 text-center">
+                <Text type="page-h4">Slide {index + 1}</Text>
+                <Text type="body">Carousel content</Text>
+              </div>
+            </Card>
+          )}
+        </Carousel>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="success">
+    <Text type="page-h2">Visual Elements</Text>
+    <Text type="body" class="mb-6">
+      Dividers, patterns, and visual enhancements
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Dividers</Text>
+        <div class="space-y-4">
+          <Text type="body">Content above</Text>
+          <Divider variant="primary">Primary Divider</Divider>
+          <Text type="body">Content below</Text>
+
+          <Divider container={true} containerGap="md">
+            <div slot="top-left">
+              <Text type="body">Left content</Text>
+            </div>
+            <div slot="bottom-right">
+              <Text type="body">Right content</Text>
+            </div>
+          </Divider>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Patterns</Text>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Pattern pattern="dots" size={8} opacity={30}>
+            <Text type="body" size="sm">Dots pattern</Text>
+          </Pattern>
+          <Pattern pattern="zigzag" size={6} opacity={40}>
+            <Text type="body" size="sm">Zigzag pattern</Text>
+          </Pattern>
+          <Pattern pattern="triangles" size={12} opacity={50}>
+            <Text type="body" size="sm">Triangles pattern</Text>
+          </Pattern>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Ratings</Text>
+        <div class="flex flex-wrap gap-4 items-center">
+          <Rating rating={3.5} showRating={true} />
+          <Rating rating={4.8} showRating={true} color="success" />
+          <Rating rating={2.2} showRating={true} color="warning" />
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="warning">
+    <Text type="page-h2">Hero Section</Text>
+    <Text type="body" class="mb-6">
+      Hero carousel for main page sections
+    </Text>
+
+    <Hero slides={[
+      {
+        imageUrl: 'https://via.placeholder.com/1200x300/3B82F6/FFFFFF?text=Hero+Showcase',
+        imageAlt: 'Hero showcase',
+        url: '#',
+        title: 'Component Showcase',
+        text: 'Demonstrating all UI components in action'
+      }
+    ]} />
+  </Container>
+
+  <Container type="danger">
+    <Text type="page-h2">Utility Components</Text>
+    <Text type="body" class="mb-6">
+      Specialized components for enhanced functionality
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Copy Buttons</Text>
+        <div class="flex flex-wrap gap-4 items-center">
+          <div class="flex items-center gap-2">
+            <Text type="body">Copy text:</Text>
+            <CopyButton value="Copy this text to clipboard" />
+          </div>
+          <div class="flex items-center gap-2">
+            <Text type="body">Copy JSON:</Text>
+            <CopyButton value='{"key":"value","number":42}' />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Slot Lists</Text>
+        <SlotList items={['Feature 1', 'Feature 2', 'Feature 3']}>
+          {({ item, index }) => (
+            <div class="p-2 bg-base-200 rounded">
+              <Text type="body">{index + 1}. {item}</Text>
+            </div>
+          )}
+        </SlotList>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Code Display</Text>
+        <Code data={{
+          component: "Showcase",
+          features: ["Layout", "Typography", "Interactive", "Visual"],
+          status: "active"
+        }} />
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Join Groups</Text>
+        <div class="space-y-2">
+          <Join>
+            <Button variant="outline" size="sm" class="rounded-r-none">Previous</Button>
+            <Button variant="primary" size="sm" class="rounded-none">Current</Button>
+            <Button variant="outline" size="sm" class="rounded-l-none">Next</Button>
+          </Join>
+
+          <Join>
+            <input type="text" placeholder="Search..." class="input input-bordered rounded-r-none" />
+            <Button variant="accent" class="rounded-l-none">Go</Button>
+          </Join>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container>
+    <Text type="page-h2">Component Combinations</Text>
+    <Text type="body" class="mb-6">
+      Real-world examples combining multiple components
+    </Text>
+
+    <ContainerGrid>
+      <Card>
+        <Text type="page-h4">Product Card</Text>
+        <div slot="image">
+          <div class="w-full h-24 bg-gradient-to-r from-blue-400 to-purple-500 rounded-md flex items-center justify-center">
+            <Text type="body" class="text-white text-sm">Product Image</Text>
+          </div>
+        </div>
+        <Text type="product-title">Sample Product</Text>
+        <Rating rating={4.2} showRating={true} class="my-2" />
+        <Text type="product-price">$49.99</Text>
+        <Text type="product-desc">A sample product description</Text>
+        <div class="mt-3">
+          <Button variant="primary" size="sm" width="block">Add to Cart</Button>
+        </div>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">User Profile</Text>
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+              <Text type="body" color="white" weight="bold">JD</Text>
+            </div>
+            <div>
+              <Text type="body" weight="semibold">John Doe</Text>
+              <Text type="body" size="sm" color="muted">Developer</Text>
+            </div>
+          </div>
+          <Divider spacing="xs" />
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <Text type="body" size="sm">Rating:</Text>
+              <Rating rating={4.8} size="sm" />
+            </div>
+            <div class="flex items-center justify-between">
+              <Text type="body" size="sm">Status:</Text>
+              <div class="px-2 py-1 bg-success text-success-content rounded text-xs">Active</div>
+            </div>
+          </div>
+          <Join>
+            <Button variant="ghost" size="sm" class="rounded-r-none">Edit</Button>
+            <Button variant="outline" size="sm" class="rounded-l-none">View</Button>
+          </Join>
+        </div>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Data Display</Text>
+        <div class="space-y-3">
+          <Text type="body" size="sm">API Response:</Text>
+          <Code data={{ status: "success", count: 3, items: ["A", "B", "C"] }} />
+          <div class="flex justify-between items-center">
+            <Text type="body" size="sm" color="muted">Last updated: <FormattedDate date={new Date()} /></Text>
+            <CopyButton value='{"status":"success","count":3,"items":["A","B","C"]}' />
+          </div>
+        </div>
+      </Card>
+    </ContainerGrid>
+  </Container>
+
+  <Container type="neutral">
+    <Text type="page-h2">Navigation & Links</Text>
+    <Text type="body" class="mb-6">
+      Navigation components and link handling
+    </Text>
+
+    <div class="space-y-4">
+      <div class="flex flex-wrap gap-4">
+        <Button href="/components" variant="link">Components Index</Button>
+        <Button href="/components/layout" variant="ghost">Layout Test</Button>
+        <Button href="/components/interactive" variant="ghost">Interactive Test</Button>
+        <Button href="/components/typography" variant="ghost">Typography Test</Button>
+        <Button href="/components/visual" variant="ghost">Visual Test</Button>
+        <Button href="/components/utility" variant="ghost">Utility Test</Button>
+      </div>
+
+      <Divider />
+
+      <div class="text-center">
+        <Text type="body" color="muted">
+          This showcase demonstrates all available UI components in the system.
+          Use the navigation above to explore specific component categories.
+        </Text>
+      </div>
+    </div>
+  </Container>
+</Layout>

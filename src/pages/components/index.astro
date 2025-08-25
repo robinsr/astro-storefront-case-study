@@ -1,0 +1,226 @@
+---
+import Layout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/elements/Container.astro';
+import Text from '~/components/elements/Text.astro';
+import Button from '~/components/elements/Button.astro';
+import Grid from '~/components/elements/Grid.astro';
+import Card from '~/components/elements/Card.astro';
+---
+
+<Layout title="Component Development & Testing">
+  <Container type="primary">
+    <Text type="page-h1">Component Development & Testing</Text>
+    <Text type="body" class="mb-8">
+      Welcome to the component development and testing environment. This page provides access to all component test pages and development tools.
+    </Text>
+  </Container>
+
+  <Container type="secondary">
+    <Text type="page-h2">Quick Navigation</Text>
+    <Text type="body" class="mb-6">
+      Jump directly to specific component categories or view the complete showcase
+    </Text>
+
+    <div class="flex flex-wrap gap-4 mb-8">
+      <Button href="/components/layout" variant="primary" size="lg">
+        Layout Components
+      </Button>
+      <Button href="/components/interactive" variant="secondary" size="lg">
+        Interactive Components
+      </Button>
+      <Button href="/components/typography" variant="accent" size="lg">
+        Typography System
+      </Button>
+      <Button href="/components/visual" variant="neutral" size="lg">
+        Visual Elements
+      </Button>
+      <Button href="/components/utility" variant="info" size="lg">
+        Utility Components
+      </Button>
+      <Button href="/components/showcase" variant="warning" size="lg">
+        Complete Showcase
+      </Button>
+    </div>
+  </Container>
+
+  <Container type="light">
+    <Text type="page-h2">Component Categories</Text>
+    <Text type="body" class="mb-6">
+      Explore different types of UI components and their capabilities
+    </Text>
+
+    <Grid>
+      <Card>
+        <Text type="page-h3">Layout & Structure</Text>
+        <Text type="body" class="mb-4">
+          Foundation components for building page layouts including containers, grids, and cards.
+        </Text>
+        <div class="space-y-2">
+          <Text type="body" size="sm">• Container variants and types</Text>
+          <Text type="body" size="sm">• Responsive grid systems</Text>
+          <Text type="body" size="sm">• Card components with slots</Text>
+          <Text type="body" size="sm">• Container query layouts</Text>
+        </div>
+        <Button href="/components/layout" outline size="sm" class="mt-4">
+          Test Layout Components →
+        </Button>
+      </Card>
+
+      <Card>
+        <Text type="page-h3">Interactive Elements</Text>
+        <Text type="body" class="mb-4">
+          User interface components for forms, navigation, and interactive content.
+        </Text>
+        <div class="space-y-2">
+          <Text type="body" size="sm">• Button variants and states</Text>
+          <Text type="body" size="sm">• Form inputs and controls</Text>
+          <Text type="body" size="sm">• Modal dialogs</Text>
+          <Text type="body" size="sm">• Content organization</Text>
+        </div>
+        <Button href="/components/interactive" outline size="sm" class="mt-4">
+          Test Interactive Components →
+        </Button>
+      </Card>
+
+      <Card>
+        <Text type="page-h3">Typography & Text</Text>
+        <Text type="body" class="mb-4">
+          Text components with consistent styling, hierarchy, and formatting options.
+        </Text>
+        <div class="space-y-2">
+          <Text type="body" size="sm">• Text types and variants</Text>
+          <Text type="body" size="sm">• Size and weight options</Text>
+          <Text type="body" size="sm">• Color and alignment</Text>
+          <Text type="body" size="sm">• Date formatting</Text>
+        </div>
+        <Button href="/components/typography" outline size="sm" class="mt-4">
+          Test Typography →
+        </Button>
+      </Card>
+
+      <Card>
+        <Text type="page-h3">Visual Elements</Text>
+        <Text type="body" class="mb-4">
+          Visual components for enhancing layouts and user experience.
+        </Text>
+        <div class="space-y-2">
+          <Text type="body" size="sm">• Dividers and separators</Text>
+          <Text type="body" size="sm">• Background patterns</Text>
+          <Text type="body" size="sm">• Rating systems</Text>
+          <Text type="body" size="sm">• Hero sections</Text>
+        </div>
+        <Button href="/components/visual" outline size="sm" class="mt-4">
+          Test Visual Elements →
+        </Button>
+      </Card>
+
+      <Card>
+        <Text type="page-h3">Utility Components</Text>
+        <Text type="body" class="mb-4">
+          Specialized components for enhanced functionality and data handling.
+        </Text>
+        <div class="space-y-2">
+          <Text type="body" size="sm">• Copy to clipboard</Text>
+          <Text type="body" size="sm">• Dynamic list rendering</Text>
+          <Text type="body" size="sm">• Data display</Text>
+          <Text type="body" size="sm">• Element grouping</Text>
+        </div>
+        <Button href="/components/utility" outline size="sm" class="mt-4">
+          Test Utility Components →
+        </Button>
+      </Card>
+
+      <Card>
+        <Text type="page-h3">Complete Showcase</Text>
+        <Text type="body" class="mb-4">
+          Comprehensive demonstration of all components working together.
+        </Text>
+        <div class="space-y-2">
+          <Text type="body" size="sm">• All components in one place</Text>
+          <Text type="body" size="sm">• Real-world combinations</Text>
+          <Text type="body" size="sm">• Component interactions</Text>
+          <Text type="body" size="sm">• Best practices</Text>
+        </div>
+        <Button href="/components/showcase" outline size="sm" class="mt-4">
+          View Complete Showcase →
+        </Button>
+      </Card>
+    </Grid>
+  </Container>
+
+  <Container type="info">
+    <Text type="page-h2">Development Notes</Text>
+    <Text type="body" class="mb-4">
+      Important information for developers working with these components
+    </Text>
+
+    <div class="space-y-4">
+      <div class="p-4 bg-base-200 rounded-lg">
+        <Text type="body" weight="semibold" class="mb-2">Component Status</Text>
+        <Text type="body" size="sm">
+          Most components are fully functional. The Tabs component is currently static and needs JavaScript implementation for full functionality.
+        </Text>
+      </div>
+
+      <div class="p-4 bg-base-200 rounded-lg">
+        <Text type="body" weight="semibold" class="mb-2">Styling System</Text>
+        <Text type="body" size="sm">
+          Components use DaisyUI classes for styling and Tailwind CSS for utilities. The system is designed to be themeable and customizable.
+        </Text>
+      </div>
+
+      <div class="p-4 bg-base-200 rounded-lg">
+        <Text type="body" weight="semibold" class="mb-2">TypeScript Support</Text>
+        <Text type="body" size="sm">
+          All components are built with TypeScript and include proper type definitions for props and interfaces.
+        </Text>
+      </div>
+    </div>
+  </Container>
+
+  <Container>
+    <Text type="page-h2">Getting Started</Text>
+    <Text type="body" class="mb-6">
+      How to use this component testing environment effectively
+    </Text>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <Text type="page-h4" class="mb-3">For Developers</Text>
+        <div class="space-y-2">
+          <Text type="body" size="sm">1. Start with the layout components to understand the foundation</Text>
+          <Text type="body" size="sm">2. Test interactive components to see user interactions</Text>
+          <Text type="body" size="sm">3. Explore typography for consistent text styling</Text>
+          <Text type="body" size="sm">4. Use the showcase to see everything together</Text>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">For Designers</Text>
+        <div class="space-y-2">
+          <Text type="body" size="sm">1. Review visual elements for design patterns</Text>
+          <Text type="body" size="sm">2. Test different component combinations</Text>
+          <Text type="body" size="sm">3. Explore spacing and layout options</Text>
+          <Text type="body" size="sm">4. Use the showcase for inspiration</Text>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="neutral">
+    <Text type="page-h2">Navigation</Text>
+    <Text type="body" class="mb-4">
+      Quick links to all component test pages
+    </Text>
+
+    <div class="flex flex-wrap gap-2">
+      <Button href="/" variant="ghost" size="sm">← Back to Main</Button>
+      <Button href="/components/layout" variant="ghost" size="sm">Layout</Button>
+      <Button href="/components/interactive" variant="ghost" size="sm">Interactive</Button>
+      <Button href="/components/typography" variant="ghost" size="sm">Typography</Button>
+      <Button href="/components/visual" variant="ghost" size="sm">Visual</Button>
+      <Button href="/components/utility" variant="ghost" size="sm">Utility</Button>
+      <Button href="/components/showcase" variant="ghost" size="sm">Showcase</Button>
+    </div>
+  </Container>
+</Layout>

@@ -1,0 +1,360 @@
+---
+import Layout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/elements/Container.astro';
+import Text from '~/components/elements/Text.astro';
+import CopyButton from '~/components/elements/CopyButton.astro';
+import SlotList from '~/components/elements/SlotList.astro';
+import Code from '~/components/elements/Code.astro';
+import Join from '~/components/elements/Join.astro';
+import Button from '~/components/elements/Button.astro';
+import Grid from '~/components/elements/Grid.astro';
+import Card from '~/components/elements/Card.astro';
+---
+
+<Layout title="Utility Components Test">
+  <Container type="primary">
+    <Text type="page-h1">Utility Components</Text>
+    <Text type="body" class="mb-8">
+      Testing CopyButton, SlotList, Code, and Join components
+    </Text>
+  </Container>
+
+  <Container type="secondary">
+    <Text type="page-h2">CopyButton Component</Text>
+    <Text type="body" class="mb-4">
+      Copy to clipboard functionality with visual feedback
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Basic Copy Buttons</Text>
+        <div class="flex flex-wrap gap-4 items-center">
+          <div class="flex items-center gap-2">
+            <Text type="body">Copy this text:</Text>
+            <CopyButton value="Hello, World!" />
+          </div>
+
+          <div class="flex items-center gap-2">
+            <Text type="body">Copy email:</Text>
+            <CopyButton value="contact@example.com" />
+          </div>
+
+          <div class="flex items-center gap-2">
+            <Text type="body">Copy URL:</Text>
+            <CopyButton value="https://example.com" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Copy Button with Long Content</Text>
+        <div class="flex items-center gap-2">
+          <Text type="body">Copy long text:</Text>
+          <CopyButton value="This is a very long piece of text that demonstrates how the copy button handles longer content. It should still work properly and copy the entire text to the clipboard." />
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Copy Button with Special Characters</Text>
+        <div class="flex items-center gap-2">
+          <Text type="body">Copy code:</Text>
+          <CopyButton value='console.log("Hello, World!"); const data = { name: "John", age: 30 };' />
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Copy Button with HTML</Text>
+        <div class="flex items-center gap-2">
+          <Text type="body">Copy HTML:</Text>
+          <CopyButton value='<div class="example">Hello World</div>' />
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="light">
+    <Text type="page-h2">SlotList Component</Text>
+    <Text type="body" class="mb-4">
+      Dynamic list rendering with slot-based content
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Basic SlotList</Text>
+        <SlotList items={['Apple', 'Banana', 'Cherry', 'Date']}>
+          {({ item, index }) => (
+            <Text type="body">
+              {index + 1}. {item}
+            </Text>
+          )}
+        </SlotList>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">SlotList with Custom Styling</Text>
+        <SlotList
+          items={['Red', 'Green', 'Blue', 'Yellow']}
+          listStyles="p-2 bg-base-200 rounded mb-2"
+        >
+          {({ item, index }) => (
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 rounded-full" style={`background-color: ${item.toLowerCase()}`}></div>
+              <Text type="body">{item} color</Text>
+            </div>
+          )}
+        </SlotList>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">SlotList with Objects</Text>
+        <SlotList items={[
+          { name: 'John', age: 30, role: 'Developer' },
+          { name: 'Jane', age: 25, role: 'Designer' },
+          { name: 'Bob', age: 35, role: 'Manager' }
+        ]}>
+          {({ item, index }) => (
+            <div class="p-3 bg-base-100 rounded border">
+              <Text type="body" weight="semibold">{item.name}</Text>
+              <Text type="body" size="sm" color="muted">Age: {item.age}, Role: {item.role}</Text>
+            </div>
+          )}
+        </SlotList>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">SlotList with Numbers</Text>
+        <SlotList items={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}>
+          {({ item, index }) => (
+            <div class="text-center p-2">
+              <Text type="body" size="lg" weight="bold">{item}</Text>
+              <Text type="body" size="sm" color="muted">Item {index + 1}</Text>
+            </div>
+          )}
+        </SlotList>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="info">
+    <Text type="page-h2">Code Component</Text>
+    <Text type="body" class="mb-4">
+      Displaying structured data and code snippets
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Simple Object Display</Text>
+        <Code data={{
+          name: "John Doe",
+          email: "john@example.com",
+          age: 30,
+          active: true
+        }} />
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Nested Object Display</Text>
+        <Code data={{
+          user: {
+            id: 123,
+            profile: {
+              firstName: "John",
+              lastName: "Doe",
+              preferences: {
+                theme: "dark",
+                notifications: true
+              }
+            },
+            roles: ["admin", "user"]
+          },
+          metadata: {
+            createdAt: "2024-01-15T10:30:00Z",
+            lastLogin: "2024-01-20T14:45:00Z"
+          }
+        }} />
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Array Display</Text>
+        <Code data={[
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Vue",
+          "Angular"
+        ]} />
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Complex Data Structure</Text>
+        <Code data={{
+          products: [
+            {
+              id: 1,
+              name: "Laptop",
+              price: 999.99,
+              inStock: true,
+              categories: ["Electronics", "Computers"]
+            },
+            {
+              id: 2,
+              name: "Mouse",
+              price: 29.99,
+              inStock: false,
+              categories: ["Electronics", "Accessories"]
+            }
+          ],
+          totalProducts: 2,
+          categories: ["Electronics", "Computers", "Accessories"]
+        }} />
+      </div>
+    </div>
+  </Container>
+
+  <Container type="success">
+    <Text type="page-h2">Join Component</Text>
+    <Text type="body" class="mb-4">
+      Grouping multiple elements with consistent styling
+    </Text>
+
+    <div class="space-y-6">
+      <div>
+        <Text type="page-h4" class="mb-3">Button Groups</Text>
+        <div class="space-y-4">
+          <Join>
+            <Button variant="primary" class="rounded-r-none">Previous</Button>
+            <Button variant="secondary" class="rounded-none">Current</Button>
+            <Button variant="primary" class="rounded-l-none">Next</Button>
+          </Join>
+
+          <Join>
+            <Button variant="outline" size="sm" class="rounded-r-none">1</Button>
+            <Button variant="outline" size="sm" class="rounded-none">2</Button>
+            <Button variant="outline" size="sm" class="rounded-none">3</Button>
+            <Button variant="outline" size="sm" class="rounded-l-none">4</Button>
+          </Join>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Input Groups</Text>
+        <div class="space-y-4">
+          <Join>
+            <input type="text" placeholder="Search..." class="input input-bordered rounded-r-none" />
+            <Button variant="primary" class="rounded-l-none">Search</Button>
+          </Join>
+
+          <Join>
+            <input type="text" placeholder="Username" class="input input-bordered rounded-r-none" />
+            <input type="password" placeholder="Password" class="input input-bordered rounded-none" />
+            <Button variant="accent" class="rounded-l-none">Login</Button>
+          </Join>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Mixed Element Groups</Text>
+        <div class="space-y-4">
+          <Join>
+            <div class="px-4 py-2 bg-base-200 rounded-r-none">
+              <Text type="body" size="sm">Status:</Text>
+            </div>
+            <div class="px-4 py-2 bg-success text-success-content rounded-none">
+              <Text type="body" size="sm" color="white">Active</Text>
+            </div>
+            <Button variant="ghost" size="sm" class="rounded-l-none">Change</Button>
+          </Join>
+
+          <Join>
+            <div class="px-3 py-1 bg-base-100 border rounded-r-none">
+              <Text type="body" size="sm">Filter:</Text>
+            </div>
+            <select class="select select-bordered rounded-none">
+              <option>All</option>
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+            <Button variant="outline" size="sm" class="rounded-l-none">Apply</Button>
+          </Join>
+        </div>
+      </div>
+
+      <div>
+        <Text type="page-h4" class="mb-3">Icon and Text Groups</Text>
+        <div class="space-y-4">
+          <Join>
+            <div class="px-3 py-2 bg-base-200 rounded-r-none">
+              <span class="text-lg">📧</span>
+            </div>
+            <div class="px-3 py-2 bg-base-100 rounded-none">
+              <Text type="body" size="sm">contact@example.com</Text>
+            </div>
+            <Button variant="ghost" size="sm" class="rounded-l-none">Copy</Button>
+          </Join>
+
+          <Join>
+            <div class="px-3 py-2 bg-base-200 rounded-r-none">
+              <span class="text-lg">📱</span>
+            </div>
+            <div class="px-3 py-2 bg-base-100 rounded-none">
+              <Text type="body" size="sm">+1 (555) 123-4567</Text>
+            </div>
+            <Button variant="ghost" size="sm" class="rounded-l-none">Call</Button>
+          </Join>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <Container>
+    <Text type="page-h2">Utility Combinations</Text>
+    <Text type="body" class="mb-4">
+      Combining multiple utility components for enhanced functionality
+    </Text>
+
+    <Grid>
+      <Card>
+        <Text type="page-h4">Data Display with Copy</Text>
+        <div class="space-y-3">
+          <Text type="body">API Response:</Text>
+          <Code data={{ status: "success", data: { id: 123, name: "Example" } }} />
+          <div class="flex justify-end">
+            <CopyButton value='{"status":"success","data":{"id":123,"name":"Example"}}' />
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">List with Actions</Text>
+        <div class="space-y-3">
+          <SlotList items={['Item 1', 'Item 2', 'Item 3']}>
+            {({ item, index }) => (
+              <div class="flex items-center justify-between p-2 bg-base-100 rounded">
+                <Text type="body">{item}</Text>
+                <Join>
+                  <Button variant="ghost" size="xs" class="rounded-r-none">Edit</Button>
+                  <Button variant="ghost" size="xs" class="rounded-l-none">Delete</Button>
+                </Join>
+              </div>
+            )}
+          </SlotList>
+        </div>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Form with Copy</Text>
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <Text type="body">Generated ID:</Text>
+            <Text type="body" weight="mono" class="bg-base-200 px-2 py-1 rounded">abc123def456</Text>
+            <CopyButton value="abc123def456" />
+          </div>
+          <Join>
+            <Button variant="outline" size="sm" class="rounded-r-none">Regenerate</Button>
+            <Button variant="primary" size="sm" class="rounded-l-none">Use ID</Button>
+          </Join>
+        </div>
+      </Card>
+    </Grid>
+  </Container>
+</Layout>

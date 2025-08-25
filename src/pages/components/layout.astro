@@ -1,0 +1,189 @@
+---
+import { default as PageLayout } from '~/layouts/BaseLayout.astro';
+import Container from '~/components/elements/Container.astro';
+import ContainerGrid from '~/components/elements/ContainerGrid.astro';
+import Grid from '~/components/elements/Grid.astro';
+import Card from '~/components/elements/Card.astro';
+import Text from '~/components/elements/Text.astro';
+import Divider from '~/components/elements/Divider.astro';
+---
+
+<PageLayout title="Layout Components Test">
+  <Container type="primary">
+    <Text type="page-h1">Layout Components</Text>
+    <Text type="body" class="mb-8">
+      Testing Container, ContainerGrid, Grid, and Card components
+    </Text>
+  </Container>
+
+  <Container type="secondary">
+    <Text type="page-h2">Container Types</Text>
+    <Text type="body" class="mb-4">
+      Different container variants with various background colors and spacing
+    </Text>
+
+    <div class="space-y-4">
+      <Container type="transparent">
+        <Text type="body">Transparent container with default spacing</Text>
+      </Container>
+
+      <Container type="neutral">
+        <Text type="body">Neutral container with neutral background</Text>
+      </Container>
+
+      <Container type="info">
+        <Text type="body">Info container with info background</Text>
+      </Container>
+
+      <Container type="success">
+        <Text type="body">Success container with success background</Text>
+      </Container>
+
+      <Container type="warning">
+        <Text type="body">Warning container with warning background</Text>
+      </Container>
+
+      <Container type="danger">
+        <Text type="body">Danger container with danger background</Text>
+      </Container>
+    </div>
+  </Container>
+
+  <Container type="light">
+    <Text type="page-h2">Grid System</Text>
+    <Text type="body" class="mb-4">
+      Responsive grid system that adapts to different screen sizes
+    </Text>
+
+    <Grid>
+      <Card>
+        <Text type="body">Grid Item 1</Text>
+      </Card>
+      <Card>
+        <Text type="body">Grid Item 2</Text>
+      </Card>
+      <Card>
+        <Text type="body">Grid Item 3</Text>
+      </Card>
+      <Card>
+        <Text type="body">Grid Item 4</Text>
+      </Card>
+      <Card>
+        <Text type="body">Grid Item 5</Text>
+      </Card>
+      <Card>
+        <Text type="body">Grid Item 6</Text>
+      </Card>
+    </Grid>
+  </Container>
+
+  <Container type="dark">
+    <Text type="page-h2">Container Grid (Container Queries)</Text>
+    <Text type="body" class="mb-4">
+      Container queries for responsive layouts based on container width
+    </Text>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="border-2 border-dashed border-gray-400 p-4">
+        <Text type="body" class="mb-2">Narrow Container</Text>
+        <ContainerGrid>
+          <Card>
+            <Text type="body">Item 1</Text>
+          </Card>
+          <Card>
+            <Text type="body">Item 2</Text>
+          </Card>
+          <Card>
+            <Text type="body">Item 3</Text>
+          </Card>
+        </ContainerGrid>
+      </div>
+
+      <div class="border-2 border-dashed border-gray-400 p-4">
+        <Text type="body" class="mb-2">Wide Container</Text>
+        <ContainerGrid>
+          <Card>
+            <Text type="body">Item 1</Text>
+          </Card>
+          <Card>
+            <Text type="body">Item 2</Text>
+          </Card>
+          <Card>
+            <Text type="body">Item 3</Text>
+          </Card>
+          <Card>
+            <Text type="body">Item 4</Text>
+          </Card>
+          <Card>
+            <Text type="body">Item 5</Text>
+          </Card>
+          <Card>
+            <Text type="body">Item 6</Text>
+          </Card>
+        </ContainerGrid>
+      </div>
+    </div>
+  </Container>
+
+  <Container type="primary">
+    <Text type="page-h2">Card Components</Text>
+    <Text type="body" class="mb-4">
+      Card components with different content layouts
+    </Text>
+
+    <Grid>
+      <Card>
+        <Text type="body">Simple card with text content</Text>
+      </Card>
+
+      <Card>
+        <Text type="page-h4">Card with heading</Text>
+        <Text type="body">This card has a heading and body text</Text>
+      </Card>
+
+      <Card link="/components">
+        <Text type="page-h4">Clickable card</Text>
+        <Text type="body">This card is clickable and links to the components page</Text>
+      </Card>
+
+      <Card>
+        <div slot="image">
+          <div class="w-full h-32 bg-gradient-to-r from-blue-400 to-purple-500 rounded-md flex items-center justify-center">
+            <Text type="body" class="text-white">Image Placeholder</Text>
+          </div>
+        </div>
+        <Text type="page-h4">Card with image</Text>
+        <Text type="body">This card has an image slot with a placeholder</Text>
+      </Card>
+    </Grid>
+  </Container>
+
+  <Container>
+    <Text type="page-h2">Spacing and Layout</Text>
+    <Text type="body" class="mb-4">
+      Demonstrating different spacing and layout options
+    </Text>
+
+    <div class="space-y-8">
+      <div class="p-4 bg-base-200 rounded-lg">
+        <Text type="body">Section with custom padding and background</Text>
+      </div>
+
+      <div class="mx-auto max-w-4xl">
+        <Text type="body">Centered content with max width</Text>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="p-4 bg-base-100 rounded-lg shadow">
+          <Text type="body">Responsive grid item</Text>
+        </div>
+        <div class="p-4 bg-base-100 rounded-lg shadow">
+          <Text type="body">Responsive grid item</Text>
+        </div>
+        <div class="p-4 bg-base-100 rounded-lg shadow">
+          <Text type="body">Responsive grid item</Text>
+        </div>
+      </div>
+    </div>
+  </Container>
+</PageLayout>

@@ -1,0 +1,65 @@
+---
+// import 'lucide-static/font/lucide.css';
+import type { HTMLAttributes } from 'astro/types';
+import { Icon as IconAstro } from 'astro-icon';
+
+interface Props extends HTMLAttributes<'svg'> {
+  name?: string;
+  size?: 'sm' | 'lg' | 'base';
+  color?: string;
+}
+
+const { name = 'home', size = 'base', color, class: className, slot, ...props } = Astro.props;
+---
+
+{
+  name.startsWith('lucide:') ? (
+    <i
+      class:list={['cw-i-lu', `cw-icon-${size}`, `icon-${name.slice(7)}`, className]}
+      style={{ color }}
+      {...props}
+    />
+  ) : (
+    <IconAstro
+      name={name}
+      style={{ color }}
+      class:list={['cw-i-astroi', `cw-icon-${size}`, className]}
+    />
+  )
+}
+
+<style>
+  :root {
+    --icon-sm: 0.9em;
+    --icon-base: 1.4em;
+    --icon-lg: 1.7em;
+  }
+
+  .cw-i-lu {
+    display: inline;
+  }
+
+  .cw-icon-base {
+    font-size: var(--icon-base);
+  }
+
+  .cw-icon-base.cw-i-astroi {
+    font-size: calc(var(--icon-base) * 1.2);
+  }
+
+  .cw-icon-sm {
+    font-size: var(--icon-sm);
+  }
+
+  .cw-icon-sm.cw-i-astroi {
+    font-size: calc(var(--icon-sm) * 2.2);
+  }
+
+  .cw-icon-lg {
+    font-size: var(--icon-lg);
+  }
+
+  .cw-icon-lg.cw-i-lu {
+    font-size: var(--icon-lg);
+  }
+</style>
