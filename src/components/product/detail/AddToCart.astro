@@ -1,0 +1,17 @@
+---
+import type { ProductVariantResult } from '~/service/schemas/product-schema.ts';
+
+interface Props {
+  variant: ProductVariantResult;
+}
+const { variant } = Astro.props;
+---
+
+<button
+  class="bg-cw_orange p-2 px-4 text-white align-middle m-1 hover:bg-cw_dark_orange transition-colors"
+  data-variant-id={variant.id}
+  data-product-handle={variant.product.handle}
+  onclick={"addToCart(event, '" + variant.id + "', '" + variant.product.handle + "')"}
+>
+  Add to Cart
+</button>

@@ -1,0 +1,53 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { ListFilterResult } from '~/service/schemas/common-schema.ts';
+
+interface Props extends HTMLAttributes<'ul'> {
+  filter: ListFilterResult;
+}
+
+const { filter, ...props } = Astro.props;
+const searchParams = Astro.url.searchParams;
+---
+
+<ul {...props}>
+  {
+    filter.values.map(({ id, label, count, input }) => (
+      <li data-filter-id={id}>
+        <div class="d-form-control">
+          <label class="d-label cursor-pointer justify-start">
+            <input
+              type="checkbox"
+              id={id}
+              name={Object.keys(input)[0]}
+              value={String(input[Object.keys(input)[0]])}
+              checked={searchParams.has(Object.keys(input)[0], String(input[Object.keys(input)[0]]))}
+              class="d-checkbox-primary d-checkbox md:d-checkbox-sm"
+              onchange={'updateParams(event, "' + id + '")'}
+              data-input={JSON.stringify(input)}
+            />
+            <span class="d-label-text ml-4 text-xs lg:text-sm">
+              {label} <small>({count} items)</small>
+            </span>
+          </label>
+        </div>
+      </li>
+    ))
+  }
+</ul>
+
+<script type="text/javascript">
+  function updateParams(event, id) {
+    var elem = document.getElementById(id);
+    var url = new URL(window.location.href);
+    var input = JSON.parse(elem.dataset.input);
+    var name = Object.keys(input)[0];
+    var value = input[name];
+    if (event.currentTarget.checked) {
+      url.searchParams.append(name, value);
+    } else {
+      url.searchParams.delete(name, value);
+    }
+    window.location.replace(url.toString());
+  }
+</script>

@@ -1,4 +1,4 @@
-import { z } from 'astro:content';
+import { z } from 'zod';
 import { paramsToMap } from '~/util/request';
 
 import { DEFAULT_SHOPIFY_COLLECTION, DEFAULT_PRODUCTS_PER_PAGE } from '~/consts';
@@ -87,8 +87,9 @@ type ProductGetQuery = z.infer<typeof ProductQuerySchema>;
  *
  * Not really important, just trying things out
  */
-const beforeAfterCursorMap = z.preprocess((data: object) => {
-  return { before: data['b'], after: data['a'], ...data };
+const beforeAfterCursorMap = z.preprocess((data: unknown) => {
+  const d = data as Record<string, unknown>;
+  return { before: d['b'], after: d['a'], ...d };
 }, ProductQuerySchema);
 
 export const parseFilterParams = (params: URLSearchParams): ProductsFilterQueryParams => {

@@ -1,0 +1,54 @@
+---
+export const prerender = false;
+
+import type { CollectionResult } from '~/service/schemas/collection-schema';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageTitle from '~/components/elements/PageTitle.astro';
+import Text from '~/components/elements/Text.astro';
+import Card from '~/components/elements/Card.astro';
+import { useMode } from '~/hooks/useMode';
+import shopify from '~/service/shopify';
+import getLogger from '~/util/log';
+
+const log = getLogger('pages/parts/index');
+
+const BUYER_IP = process.env.NODE_ENV === 'development' ? '127.0.0.1' : Astro.clientAddress;
+
+const rawResult = await shopify.collection
+  .list({ first: 20, first_products: 0 }, BUYER_IP)
+  .catch((error) => {
+    log.error(error);
+    if (useMode('prod')) return Astro.redirect('/error');
+    return null;
+  });
+
+const collections: CollectionResult[] = rawResult
+  ? rawResult.items.filter((c) => c.itemCount > 0)
+  : [];
+---
+
+<BaseLayout title="All Categories | Parts">
+  <PageTitle title="All Categories" />
+
+  <div class="mt-8 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+    {
+      collections.map(({ handle, image, title, description, itemCount }) => (
+        <Card link={`/parts/categories/${handle}`}>
+          <img
+            slot="image"
+            src={image.url}
+            alt={image.altText || title}
+            class="h-full w-full object-contain"
+          />
+          <Text callout decoration="underline">
+            {title}
+          </Text>
+          <small class="my-0 text-xs">
+            ({itemCount ? `${itemCount} Items` : 'No Items'})
+          </small>
+          <Text type="body">{description}</Text>
+        </Card>
+      ))
+    }
+  </div>
+</BaseLayout>

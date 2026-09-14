@@ -6,10 +6,10 @@ const SHOPIFY_API_VERSION = '2023-10';
 
 const config = {
   apiVersion: SHOPIFY_API_VERSION,
-  domain: getEnv('SHOPIFY_STORE_DOMAIN'),
+  domain: getEnv('SHOPIFY_STORE_DOMAIN', import.meta.env),
   token: {
-    storefront: getEnv('SHOPIFY_STOREFRONT_TOKEN'),
-    admin: getEnv('SHOPIFY_ADMIN_TOKEN'),
+    storefront: getEnv('SHOPIFY_STOREFRONT_TOKEN', import.meta.env),
+    admin: getEnv('SHOPIFY_ADMIN_TOKEN', import.meta.env),
   },
 };
 

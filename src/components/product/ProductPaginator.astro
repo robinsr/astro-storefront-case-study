@@ -1,0 +1,57 @@
+---
+import { z } from 'zod';
+import { PageInfoResult } from '~/service/schemas/common-schema';
+import Icon from '~/components/elements/Icon.astro';
+
+interface Props {
+  pageInfo: z.infer<typeof PageInfoResult>;
+}
+
+const {
+  hasPreviousPage = false,
+  hasNextPage = false,
+  endCursor,
+  startCursor,
+} = Astro.props.pageInfo;
+
+const next = new URL(Astro.url);
+if (hasNextPage) {
+  next.searchParams.set('after', endCursor?.replace('==', '') || '');
+  next.searchParams.delete('before');
+}
+
+const prev = new URL(Astro.url);
+if (hasPreviousPage) {
+  prev.searchParams.set('before', startCursor?.replace('==', '') || '');
+  prev.searchParams.delete('after');
+}
+---
+
+<div class="product-paginator py-12">
+  <div
+    class:list={[
+      'd-join',
+      'grid',
+      {
+        'grid-cols-2': hasPreviousPage && hasNextPage,
+        'grid-cols-1': !(hasPreviousPage && hasNextPage),
+      },
+    ]}
+  >
+    {
+      hasPreviousPage && (
+        <a href={prev.toString()} class="d-btn d-btn-outline d-join-item">
+          <Icon name="lucide:arrow-left" />
+          Previous page
+        </a>
+      )
+    }
+    {
+      hasNextPage && (
+        <a href={next.toString()} class="d-btn d-btn-outline d-join-item">
+          Next page <Icon name="lucide:arrow-right" />
+        </a>
+      )
+    }
+  </div>
+</div>

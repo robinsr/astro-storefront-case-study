@@ -26,6 +26,6 @@ export class ShopifyService {
 
 export type AnyShopifyService = ShopifyService | MockShopifyService;
 
-const isMock = import.meta.env.SHOPIFY_MOCK === 'true';
+const isMock = import.meta.env.SHOPIFY_MOCK === 'true' || process.env.SHOPIFY_MOCK === 'true';
 
 export default (isMock ? mockService : new ShopifyService()) as AnyShopifyService;

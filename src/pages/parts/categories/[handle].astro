@@ -1,0 +1,151 @@
+---
+export const prerender = false;
+
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Text from '~/components/elements/Text.astro';
+import Accordion from '~/components/elements/Accordion.astro';
+import ContainerGrid from '~/components/elements/ContainerGrid.astro';
+import PageTitle from '~/components/elements/PageTitle.astro';
+import ProductTile from '~/components/product/ProductTile.astro';
+import ProductPaginator from '~/components/product/ProductPaginator.astro';
+import CheckboxFilter from '~/components/product/filters/CheckboxFilter.astro';
+import PriceRangeFilter from '~/components/product/filters/PriceRangeFilter.astro';
+import { useMode } from '~/hooks/useMode';
+import shopify from '~/service/shopify';
+import { fromSchema } from '~/service/model/StoreItem';
+import { parseFilterParams } from '~/service/model/StoreFilter';
+import getLogger from '~/util/log';
+
+import type {
+  FilterResult,
+  PriceRangerFilterResult,
+  ListFilterResult,
+} from '~/service/schemas/common-schema.ts';
+
+const log = getLogger('pages/parts/categories');
+
+const BUYER_IP = process.env.NODE_ENV === 'development' ? '127.0.0.1' : Astro.clientAddress;
+
+const isPriceFilter = (f: FilterResult): f is PriceRangerFilterResult => f.type === 'PRICE_RANGE';
+const isListFilter = (f: FilterResult): f is ListFilterResult => f.type === 'LIST';
+
+const filterShouldOpen = (filter: FilterResult): boolean => {
+  if (filter.type === 'PRICE_RANGE') return true;
+  if (filter.id === 'filter.v.availability') return true;
+  if (filter.id === 'filter.v.tag') return true;
+  return true;
+};
+
+function getShopifyFilters(searchParams: URLSearchParams): object[] {
+  const NOT_FILTERS = ['before', 'after', 'sort'];
+  const filters: object[] = [];
+  for (const [key, value] of searchParams) {
+    if (!NOT_FILTERS.includes(key)) {
+      const val = value === 'true' ? true : value === 'false' ? false : value;
+      filters.push({ [key]: val });
+    }
+  }
+  return filters;
+}
+
+const { handle } = Astro.params;
+const { url } = Astro;
+const params = parseFilterParams(url.searchParams);
+const searchFilters = getShopifyFilters(url.searchParams);
+const searchParams = url.searchParams;
+
+const queryVars = {
+  handle: handle!,
+  product_start_cursor: params.before ?? null,
+  sortKey: params.sort[0],
+  filters: searchFilters,
+};
+
+const collection = await shopify.collection.get(queryVars, BUYER_IP).catch((error) => {
+  log.error(error);
+  if (useMode('prod')) return Astro.redirect('/parts');
+  throw error;
+});
+
+const { title, products } = collection as Awaited<ReturnType<typeof shopify.collection.get>>;
+const { filters, pageInfo } = products;
+---
+
+<BaseLayout title={`${title} | Parts`}>
+  <PageTitle title={title} />
+
+  <div class="grid grid-cols-4 gap-4">
+    <!-- Mobile filters (top) -->
+    <div class="col-span-4 block md:hidden">
+      {
+        filters.map((filter) => (
+          <Accordion label={filter.label} opened={false}>
+            {isListFilter(filter) && <CheckboxFilter filter={filter} />}
+            {isPriceFilter(filter) && <PriceRangeFilter filter={filter} />}
+          </Accordion>
+        ))
+      }
+    </div>
+
+    <!-- Desktop filters (left) -->
+    <div class="filtering hidden md:block">
+      {
+        filters.map((filter) => (
+          <Accordion label={filter.label} opened={filterShouldOpen(filter)}>
+            {isListFilter(filter) && <CheckboxFilter filter={filter} />}
+            {isPriceFilter(filter) && <PriceRangeFilter filter={filter} />}
+          </Accordion>
+        ))
+      }
+    </div>
+
+    <!-- Product grid -->
+    <div class="col-span-4 md:col-span-3">
+      <div class="mb-4 hidden w-full flex-row justify-end bg-base-300 p-2 md:flex">
+        <label class="grid w-fit grid-cols-6">
+          <span class="col-span-2 flex items-center justify-end pr-4">Sort by</span>
+          <select
+            id="sort-select"
+            name="sort"
+            class="d-select d-select-bordered d-select-sm col-span-4"
+            onchange="sortSelect()"
+          >
+            <option value="bestselling" selected={searchParams.get('sort') === 'bestselling'}>
+              Bestselling
+            </option>
+            <option value="price-asc" selected={searchParams.get('sort') === 'price-asc'}>
+              Price low–high
+            </option>
+            <option value="price-desc" selected={searchParams.get('sort') === 'price-desc'}>
+              Price high–low
+            </option>
+          </select>
+        </label>
+      </div>
+
+      <ContainerGrid>
+        {
+          products.nodes.map((productResult) => (
+            <ProductTile
+              item={fromSchema(productResult)}
+              variant={productResult.variants.nodes[0]}
+            />
+          ))
+        }
+      </ContainerGrid>
+    </div>
+  </div>
+
+  <div class="mt-4 flex flex-row justify-center">
+    <ProductPaginator pageInfo={pageInfo} />
+  </div>
+</BaseLayout>
+
+<script type="text/javascript">
+  function sortSelect() {
+    var url = new URL(window.location.href);
+    var sort = document.getElementById('sort-select');
+    url.searchParams.set('sort', sort.value);
+    window.location.replace(url.toString());
+  }
+</script>

@@ -1,0 +1,79 @@
+---
+export const prerender = false;
+import type { StoreItem } from '~/service/model/StoreItem.ts';
+import type { ProductVariantResult } from '~/service/schemas/product-schema.ts';
+import Text from '~/components/elements/Text.astro';
+import AddToCart from './detail/AddToCart.astro';
+import { variantPrice } from '~/hooks/usePrice.ts';
+
+interface Props {
+  item: StoreItem;
+  variant: ProductVariantResult;
+}
+
+const { item, variant } = Astro.props;
+const { handle, images, title } = item;
+const { symbol, amount, currencyCode } = variantPrice(variant);
+---
+
+<div class="product-tile group box-border border-2 border-base-200 p-1">
+  <div class="product-skeleton flex w-full flex-col gap-2 group-has-[.loaded]:hidden">
+    <div class="d-skeleton aspect-[1/1] w-full rounded-lg">
+      <span class="sr-only">(image)</span>
+    </div>
+    <div class="d-skeleton h-16 w-full rounded-lg"><span class="sr-only">(title)</span></div>
+    <div class="d-skeleton h-6 w-full rounded-lg"><span class="sr-only">(price)</span></div>
+  </div>
+
+  <a href={'/parts/' + handle}>
+    <div class="cursor-pointer">
+      <img
+        src={images.main.url}
+        alt={title}
+        class="product-tile-image duration-1300 aspect-[1/1] object-scale-down transition-all hover:scale-[1.02] ease-in-out"
+        decoding="async"
+        onload="this.classList.add('loaded')"
+      />
+      <Text product-title size="base" clampLines={2} class="break break-words hover:underline">
+        {title}
+      </Text>
+    </div>
+  </a>
+
+  <dialog id={'modal-' + handle} class="modal">
+    <div class="modal-box m-2">
+      <Text class="text-xl">{title}</Text>
+      <img
+        src={images.main.url}
+        alt={title}
+        class="product-tile-image duration-1300 aspect-[1/1] transition-all ease-in-out"
+        decoding="async"
+      />
+      <div class="modal-action flex justify-end">
+        <form method="dialog">
+          <button class="btn bg-cw_orange text-white p-2 m-1">Close</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <Text product-price size="lg" class="m-1">
+    <span>{symbol}</span>
+    <span class="font-bold">{amount}</span>
+    <span>{currencyCode}</span>
+  </Text>
+
+  <div class="flex justify-center">
+    <AddToCart variant={variant} />
+  </div>
+</div>
+
+<style>
+  input.number-to-text::-webkit-outer-spin-button,
+  input.number-to-text::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  input[type='number'].number-to-text {
+    -moz-appearance: textfield;
+  }
+</style>

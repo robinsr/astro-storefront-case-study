@@ -1,0 +1,50 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { PriceRangerFilterResult } from '~/service/schemas/common-schema.ts';
+
+interface Props extends HTMLAttributes<'div'> {
+  filter: PriceRangerFilterResult;
+}
+
+const { filter, ...props } = Astro.props;
+const searchParams = Astro.url.searchParams;
+---
+
+<div class="flex flex-col justify-between" {...props}>
+  {
+    filter.values.map(({ id, input }) => (
+      <>
+        <div data-filter-id={id}>
+          <label class="d-label justify-start">
+            <span class="d-label-text min-w-12">From:</span>
+            <input
+              type="number"
+              min="0"
+              max={input.price.max}
+              step="1"
+              name="priceMin"
+              placeholder="Price from..."
+              class="d-input d-input-bordered w-full md:d-input-xs"
+              value={searchParams.get('priceMin') || null}
+            />
+          </label>
+        </div>
+        <div data-filter-id={id}>
+          <label class="d-label justify-start">
+            <span class="d-label-text min-w-12">To:</span>
+            <input
+              type="number"
+              min="0"
+              max={input.price.max}
+              step="1"
+              name="priceMax"
+              placeholder="Price to..."
+              class="d-input d-input-bordered w-full md:d-input-xs"
+              value={searchParams.get('priceMax') || null}
+            />
+          </label>
+        </div>
+      </>
+    ))
+  }
+</div>

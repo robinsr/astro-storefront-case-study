@@ -2,10 +2,10 @@ import { getLogger, json } from '~/util';
 import { isEnv } from '~/util/env';
 import config from './config';
 
-const PROD = isEnv('NODE_ENV', 'production');
+const PROD = isEnv('NODE_ENV', 'production', import.meta.env);
 const log = getLogger('service/shopify/client');
-const br = log.combine(log.color.bold, log.color.red);
-const bg = log.combine(log.color.bold, log.color.green);
+const br = (s: unknown) => String(s);
+const bg = (s: unknown) => String(s);
 
 const getQueryName = (query?: string) => {
   const match = query && query.match(/(?:mutation|query)\s(\w+)/);
@@ -70,7 +70,7 @@ export async function shopifyStorefront(query: string, variables: Record<string,
   if (buyerIP) {
     fetchopts.headers['X-Shopify-Storefront-Buyer-IP'] = buyerIP;
   } else {
-    PROD && log.warn('No buyer IP provided for this Storefront API request');
+    PROD && log.error('No buyer IP provided for this Storefront API request');
   }
 
   try {
