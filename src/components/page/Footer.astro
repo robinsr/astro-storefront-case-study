@@ -1,0 +1,58 @@
+---
+import type { LinkTreeNode } from '~/util/types';
+import Text from '~/components/elements/Text.astro';
+import { getAppLocals } from '~/util/astro';
+import { MAIN_MENU_ITEMS } from '~/consts';
+
+const { isSignedIn } = getAppLocals(Astro);
+
+const footerItems: LinkTreeNode[] = [...MAIN_MENU_ITEMS];
+---
+
+<footer class="bottom-0 mt-20 bg-gradient-to-b px-1 pb-6 pt-2 text-center bg-cw_dark_gray">
+  <div class="cw-space-xs container mx-auto flex flex-row items-start justify-between">
+    {
+      footerItems.map(({ label, items }) => (
+        <div>
+          <Text size="md" weight="bold" class="text-base-content text-cw_light_gray" align="left">
+            {label}
+          </Text>
+          <ul>
+            {items
+              .filter(({ test }) => !test || test())
+              .map(({ label, url }) => (
+                <li>
+                  <Text body align="left">
+                    <a href={url ?? '#'} class="text-cw_light_gray">
+                      {label}
+                    </a>
+                  </Text>
+                </li>
+              ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <Text class="text-cw_light_gray text-xl font-bold">
+    <i>Questions? <a href="mailto:shop@example.com">Contact us</a></i>
+  </Text>
+
+  <div class="social-links mt-4 flex justify-center gap-1">
+    <a class="text-shark decoration-0" href="#" target="_blank">
+      <span class="sr-only">Follow on Facebook</span>
+      <img src="/icons/facebook_black.svg" width="32" height="32" alt="Facebook" />
+    </a>
+    <a class="text-shark decoration-0" href="#" target="_blank">
+      <span class="sr-only">Follow on Instagram</span>
+      <img src="/icons/instagram_black.svg" width="32" height="32" alt="Instagram" />
+    </a>
+  </div>
+
+  <div class="cw-space-xs container mx-auto flex flex-row items-center justify-center">
+    <Text body class="cw-space-md text-cw_light_gray">
+      &copy; {new Date().getFullYear()} Counterweight Motorsport. All rights reserved.
+    </Text>
+  </div>
+</footer>

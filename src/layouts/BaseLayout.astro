@@ -1,53 +1,67 @@
 ---
-import '~/styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
+import BaseHead from '~/components/page/BaseHead.astro';
+import Header from '~/components/page/Header.astro';
+import Footer from '~/components/page/Footer.astro';
+import { SITE_DESCRIPTION, PAGE_TRANSITIONS } from '~/consts';
+import { LIGHT_THEME } from '~/consts.themes.ts';
+import { getAppLocals } from '~/util/astro';
 
-import { ClientRouter } from "astro:transitions";
-
-export interface Props {
-  title: string;
+interface Props {
+  title?: string;
   description?: string;
-  lang?: string;
+  mainClass?: string;
+  bodyClass?: string;
 }
 
-const { title, description = "A basic HTML page", lang = "en" } = Astro.props;
+const { title = '', description = SITE_DESCRIPTION, bodyClass = '', mainClass = '' } = Astro.props;
+
+const { theme = LIGHT_THEME } = getAppLocals(Astro);
 ---
 
-<!DOCTYPE html>
-<html lang={lang}>
+<!doctype html>
+<html lang="en" data-theme={theme}>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <title>{title}</title>
-
-    <ClientRouter />
+    <BaseHead title={title} description={description}>
+      <slot name="head-scripts" slot="head" />
+    </BaseHead>
+    {PAGE_TRANSITIONS && <ViewTransitions />}
   </head>
 
-  <body>
-    <header>
-      <div class="container">
-        <h1>{title}</h1>
-      </div>
-    </header>
+  <body class:list={[bodyClass]}>
+    <script is:inline>
+      const theme = localStorage.getItem('user_theme');
+      if (theme) {
+        try {
+          const { value } = JSON.parse(theme);
+          if (value) document.documentElement.dataset.theme = value;
+        } catch {}
+      }
+    </script>
 
-    <main>
-      <div class="container">
-        <slot />
-      </div>
+    <slot name="before-nav" />
+    <Header />
+    <slot name="after-nav" />
+
+    <main class:list={[mainClass, 'relative md:mt-4']}>
+      <slot name="before-content" />
+      <slot />
+      <slot name="after-content" />
     </main>
 
-    <footer>
-      <div class="container">
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
-      </div>
-    </footer>
+    <slot name="before-footer" />
+    <Footer />
+    <slot name="after-footer" />
 
     <script>
+      import { onEveryPageLoad } from '~/scripts/astro.transitions';
       import Alpine from 'alpinejs';
-      document.addEventListener('astro:page-load',() => {
+
+      onEveryPageLoad(() => {
         window.Alpine = Alpine;
         Alpine.start();
       });
     </script>
+    <slot name="end-scripts" />
   </body>
 </html>

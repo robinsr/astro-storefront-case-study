@@ -3,7 +3,7 @@ import ShopifyCustomer from './customer/customer-resource';
 import ShopifyCollection from './collection/collection-resource';
 import ShopifyProduct from './product/product-resource';
 import { shopifyStorefront, shopifyAdmin } from './client';
-
+import mockService, { MockShopifyService } from '~/service/mock/index';
 
 const client = {
   admin: shopifyAdmin,
@@ -24,4 +24,8 @@ export class ShopifyService {
   }
 }
 
-export default new ShopifyService();
+export type AnyShopifyService = ShopifyService | MockShopifyService;
+
+const isMock = import.meta.env.SHOPIFY_MOCK === 'true';
+
+export default (isMock ? mockService : new ShopifyService()) as AnyShopifyService;

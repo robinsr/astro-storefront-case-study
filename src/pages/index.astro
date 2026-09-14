@@ -1,17 +1,13 @@
 ---
 export const prerender = false;
 
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '~/consts';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout description={SITE_DESCRIPTION}>
+  <div class="container mx-auto px-4 py-16 text-center">
+    <h1 class="font-['Commerce'] text-5xl mb-4">{SITE_TITLE}</h1>
+    <p class="text-xl opacity-70">Track day &amp; racing parts for serious riders.</p>
+  </div>
+</BaseLayout>

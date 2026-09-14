@@ -1,0 +1,41 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'>;
+
+const { href, class: className, ...props } = Astro.props;
+
+const { pathname } = Astro.url;
+const isActive = href === pathname || href === pathname.replace(/\/$/, '');
+
+const tailwind = `
+block
+md:p-1
+text-white
+border-2
+border-white
+font-['Commerce']
+h-full
+h-max-full
+w-full
+align-middle
+hover:bg-cw_dark_gray
+`;
+---
+
+<div class="items-center justify-center">
+  <a href={href} class:list={[tailwind, className, { active: isActive }]} {...props}>
+    <slot />
+  </a>
+</div>
+
+<style>
+  a {
+    display: inline-block;
+    text-decoration: none;
+  }
+  a.active {
+    font-weight: bolder;
+    text-decoration: underline;
+  }
+</style>

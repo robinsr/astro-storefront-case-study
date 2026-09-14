@@ -1,0 +1,28 @@
+---
+import Icon from '~/components/elements/Icon.astro';
+import Button from '~/components/elements/Button.astro';
+
+const { class: className, ...props } = Astro.props;
+const tailwind = "font-['Commerce'] text-xl float-right rounded-none";
+---
+
+<Button
+  class:list={[tailwind, className]}
+  {...props}
+  type="link"
+  variant="primary"
+  href="/users/cart"
+  icon="lucide:shopping-cart"
+>Cart</Button>
+
+<script>
+  import Alpine from 'alpinejs';
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('cartBtn', () => ({
+      cartCount: 0,
+      init() {},
+      destroy() {},
+    }));
+  });
+</script>

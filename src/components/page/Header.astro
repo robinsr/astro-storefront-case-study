@@ -1,0 +1,81 @@
+---
+import { SITE_TITLE, BRAND_LOGO_PATH, MAIN_MENU_ITEMS } from '~/consts';
+import Button from '~/components/elements/Button.astro';
+import HeaderLink from './HeaderLink.astro';
+import Text from '~/components/elements/Text.astro';
+
+const sublink = 'text-md xl:text-xl 2xl:text-2xl h-full bg-cw_gray pt-3 ';
+---
+
+<header class="border-b-4 border-cw_light_gray" transition:persist>
+  <nav id="site-nav">
+    <div class="w-full md:h-28 grid grid-cols-2 grid-flow-dense md:grid-flow-row md:grid-cols-6 items-center">
+      <div class="h-full">
+        <a class="content-center d-btn d-btn-ghost w-full h-full pl-0 text-xl" href="/" title={`${SITE_TITLE} Home`}>
+          <img
+            src={BRAND_LOGO_PATH}
+            alt="CW-Moto Logo"
+            class="w-[120px] sm:w-[160px] lg:w-[200px] xl:w-[220px] 2xl:w-[260px]"
+          />
+        </a>
+      </div>
+
+      <div class="linksection text-center h-24 col-span-2">
+        <HeaderLink class="toplink text-2xl 2xl:text-4xl h-12 bg-cw_orange hover:bg-cw_dark_orange md:p-0.5" href="/parts">THE SHOP</HeaderLink>
+        <div class="grid grid-cols-3 h-12">
+          <HeaderLink class={sublink} href="/parts/suspension">Suspension</HeaderLink>
+          <HeaderLink class={sublink} href="/parts">Browse Shop</HeaderLink>
+          <HeaderLink class={sublink} href="https://www.ebay.com/str/counterweightmotorsport">Ebay Store</HeaderLink>
+        </div>
+      </div>
+
+      <div class="linksection text-center h-24 col-span-2">
+        <HeaderLink class="toplink text-2xl 2xl:text-4xl h-12 bg-cw_orange hover:bg-cw_dark_orange md:p-0.5" href="/team">THE TEAM</HeaderLink>
+        <div class="grid grid-cols-2 h-12">
+          <HeaderLink class={sublink} href="/sponsors">Sponsors</HeaderLink>
+          <HeaderLink class={sublink} href="/races">Race Calendar</HeaderLink>
+        </div>
+      </div>
+
+      <div class="pr-[1em] text-right">
+        <Button
+          x-data="toggleThemeBtn"
+          x-on:click="toggleTheme"
+          variant="ghost"
+          size="sm"
+          aria-label="Toggle theme"
+          icon="lucide:sun-moon"
+        />
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  import { $doc } from '~/scripts/dom';
+  import { setupTheme, toggleTheme } from '~/scripts/handle-theme.ts';
+  import Alpine from 'alpinejs';
+
+  $doc('alpine:init', () => {
+    Alpine.data('toggleThemeBtn', () => ({
+      toggleTheme: () => toggleTheme(document),
+    }));
+  });
+
+  setupTheme(document);
+</script>
+
+<style>
+  details.site-nav-lg[open] summary::before,
+  body:has(.d-dropdown.site-nav-sm:is(:focus, :focus-within))::after {
+    content: '';
+    width: 105vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -5vw;
+    cursor: auto;
+    background-color: rgb(0 0 0 / 0.5);
+    z-index: 5;
+  }
+</style>
