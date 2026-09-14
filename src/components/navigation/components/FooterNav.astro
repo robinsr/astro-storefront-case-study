@@ -1,0 +1,50 @@
+---
+import Container from '@/components/elements/Container.astro';
+import Text from '@/components/elements/Text.astro';
+import Button from '@/components/elements/Button.astro';
+
+const pages = [
+  {
+    href: '/components',
+    label: '← Back to Main'
+  },
+  {
+    href: '/components/layout',
+    label: 'Layout'
+  },
+  {
+    href: '/components/interactive',
+    label: 'Interactive'
+  },
+  {
+    href: '/components/typography',
+    label: 'Typography'
+  },
+  {
+    href: '/components/visual',
+    label: 'Visual'
+  },
+  {
+    href: '/components/utility',
+    label: 'Utility'
+  },
+  {
+    href: '/components/showcase',
+    label: 'Showcase'
+  }
+];
+
+---
+
+<Container type="primary">
+  <Text type="page-h2">Navigation</Text>
+  <Text type="body" class="mb-4">
+    Quick links to all component test pages
+  </Text>
+
+  <div class="flex flex-wrap gap-2">
+    {pages.map((page) => (
+      <Button href={page.href} variant="ghost" size="sm">{page.label}</Button>
+    ))}
+  </div>
+</Container>

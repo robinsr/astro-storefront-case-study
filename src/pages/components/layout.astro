@@ -6,6 +6,7 @@ import Grid from '~/components/elements/Grid.astro';
 import Card from '~/components/elements/Card.astro';
 import Text from '~/components/elements/Text.astro';
 import Divider from '~/components/elements/Divider.astro';
+import FooterNav from '~/components/navigation/components/FooterNav.astro';
 ---
 
 <PageLayout title="Layout Components Test">
@@ -148,7 +149,7 @@ import Divider from '~/components/elements/Divider.astro';
 
       <Card>
         <div slot="image">
-          <div class="w-full h-32 bg-gradient-to-r from-blue-400 to-purple-500 rounded-md flex items-center justify-center">
+          <div class="w-full h-32 bg-linear-to-r from-blue-400 to-purple-500 rounded-md flex items-center justify-center">
             <Text type="body" class="text-white">Image Placeholder</Text>
           </div>
         </div>
@@ -186,4 +187,6 @@ import Divider from '~/components/elements/Divider.astro';
       </div>
     </div>
   </Container>
+
+  <FooterNav />
 </PageLayout>

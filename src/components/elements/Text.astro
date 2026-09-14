@@ -15,6 +15,7 @@ const textTypes = [
   'label',
   'small',
   'silly',
+  'mono',
 ] as const;
 
 type TextType = (typeof textTypes)[number];
@@ -86,6 +87,7 @@ const tagMap = {
   silly: 'p',
   small: 'small',
   body: 'p',
+  mono: 'p',
 } as const;
 
 const proseClass = 'prose dark:prose-invert';
@@ -104,6 +106,7 @@ const classMap = {
   small: 'prose-sm',
   body: `text-base-content`,
   prose: `${proseClass} prose-base`,
+  mono: 'font-mono',
 } as const;
 
 const sizeMap = {

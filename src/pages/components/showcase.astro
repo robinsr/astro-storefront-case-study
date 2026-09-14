@@ -21,6 +21,8 @@ import CopyButton from '~/components/elements/CopyButton.astro';
 import SlotList from '~/components/elements/SlotList.astro';
 import Code from '~/components/elements/Code.astro';
 import Join from '~/components/elements/Join.astro';
+import FooterNav from '~/components/navigation/components/FooterNav.astro';
+
 ---
 
 <Layout title="Complete Component Showcase">
@@ -329,7 +331,7 @@ import Join from '~/components/elements/Join.astro';
       <Card>
         <Text type="page-h4">Product Card</Text>
         <div slot="image">
-          <div class="w-full h-24 bg-gradient-to-r from-blue-400 to-purple-500 rounded-md flex items-center justify-center">
+          <div class="w-full h-24 bg-linear-to-r from-blue-400 to-purple-500 rounded-md flex items-center justify-center">
             <Text type="body" class="text-white text-sm">Product Image</Text>
           </div>
         </div>
@@ -412,4 +414,6 @@ import Join from '~/components/elements/Join.astro';
       </div>
     </div>
   </Container>
+
+  <FooterNav />
 </Layout>

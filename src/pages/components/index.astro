@@ -5,6 +5,7 @@ import Text from '~/components/elements/Text.astro';
 import Button from '~/components/elements/Button.astro';
 import Grid from '~/components/elements/Grid.astro';
 import Card from '~/components/elements/Card.astro';
+import FooterNav from '~/components/navigation/components/FooterNav.astro';
 ---
 
 <Layout title="Component Development & Testing">
@@ -207,20 +208,5 @@ import Card from '~/components/elements/Card.astro';
     </div>
   </Container>
 
-  <Container type="neutral">
-    <Text type="page-h2">Navigation</Text>
-    <Text type="body" class="mb-4">
-      Quick links to all component test pages
-    </Text>
-
-    <div class="flex flex-wrap gap-2">
-      <Button href="/" variant="ghost" size="sm">← Back to Main</Button>
-      <Button href="/components/layout" variant="ghost" size="sm">Layout</Button>
-      <Button href="/components/interactive" variant="ghost" size="sm">Interactive</Button>
-      <Button href="/components/typography" variant="ghost" size="sm">Typography</Button>
-      <Button href="/components/visual" variant="ghost" size="sm">Visual</Button>
-      <Button href="/components/utility" variant="ghost" size="sm">Utility</Button>
-      <Button href="/components/showcase" variant="ghost" size="sm">Showcase</Button>
-    </div>
-  </Container>
+  <FooterNav />
 </Layout>

@@ -9,6 +9,7 @@ import Join from '~/components/elements/Join.astro';
 import Button from '~/components/elements/Button.astro';
 import Grid from '~/components/elements/Grid.astro';
 import Card from '~/components/elements/Card.astro';
+import FooterNav from '~/components/navigation/components/FooterNav.astro';
 ---
 
 <Layout title="Utility Components Test">
@@ -82,7 +83,7 @@ import Card from '~/components/elements/Card.astro';
       <div>
         <Text type="page-h4" class="mb-3">Basic SlotList</Text>
         <SlotList items={['Apple', 'Banana', 'Cherry', 'Date']}>
-          {({ item, index }) => (
+          {({ item, index }: { item: string, index: number }) => (
             <Text type="body">
               {index + 1}. {item}
             </Text>
@@ -96,9 +97,9 @@ import Card from '~/components/elements/Card.astro';
           items={['Red', 'Green', 'Blue', 'Yellow']}
           listStyles="p-2 bg-base-200 rounded mb-2"
         >
-          {({ item, index }) => (
+          {({ item, index }: { item: string, index: number }) => (
             <div class="flex items-center gap-2">
-              <div class="w-4 h-4 rounded-full" style={`background-color: ${item.toLowerCase()}`}></div>
+              <div class="w-4 h-4 rounded-full" style={`background-color: ${item}`}></div>
               <Text type="body">{item} color</Text>
             </div>
           )}
@@ -112,10 +113,10 @@ import Card from '~/components/elements/Card.astro';
           { name: 'Jane', age: 25, role: 'Designer' },
           { name: 'Bob', age: 35, role: 'Manager' }
         ]}>
-          {({ item, index }) => (
+          {({ item, index }: { item: { name: string, age: number, role: string }, index: number }) => (
             <div class="p-3 bg-base-100 rounded border">
-              <Text type="body" weight="semibold">{item.name}</Text>
-              <Text type="body" size="sm" color="muted">Age: {item.age}, Role: {item.role}</Text>
+              <Text type="body" weight="semibold">{item?.name}</Text>
+              <Text type="body" size="sm" color="muted">Age: {item?.age}, Role: {item?.role}</Text>
             </div>
           )}
         </SlotList>
@@ -124,7 +125,7 @@ import Card from '~/components/elements/Card.astro';
       <div>
         <Text type="page-h4" class="mb-3">SlotList with Numbers</Text>
         <SlotList items={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}>
-          {({ item, index }) => (
+          {({ item, index }: { item: number, index: number }) => (
             <div class="text-center p-2">
               <Text type="body" size="lg" weight="bold">{item}</Text>
               <Text type="body" size="sm" color="muted">Item {index + 1}</Text>
@@ -328,7 +329,7 @@ import Card from '~/components/elements/Card.astro';
         <Text type="page-h4">List with Actions</Text>
         <div class="space-y-3">
           <SlotList items={['Item 1', 'Item 2', 'Item 3']}>
-            {({ item, index }) => (
+            {({ item, index }: { item: string, index: number }) => (
               <div class="flex items-center justify-between p-2 bg-base-100 rounded">
                 <Text type="body">{item}</Text>
                 <Join>
@@ -346,7 +347,7 @@ import Card from '~/components/elements/Card.astro';
         <div class="space-y-3">
           <div class="flex items-center gap-2">
             <Text type="body">Generated ID:</Text>
-            <Text type="body" weight="mono" class="bg-base-200 px-2 py-1 rounded">abc123def456</Text>
+            <Text type="mono" class="bg-base-200 px-2 py-1 rounded">abc123def456</Text>
             <CopyButton value="abc123def456" />
           </div>
           <Join>
@@ -357,4 +358,6 @@ import Card from '~/components/elements/Card.astro';
       </Card>
     </Grid>
   </Container>
+
+  <FooterNav />
 </Layout>
