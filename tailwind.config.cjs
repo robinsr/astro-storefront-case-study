@@ -124,7 +124,7 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/container-queries'),
     require('tailwindcss-bg-patterns'),
-    require('@tailwindcss/typography'),
+    // require('@tailwindcss/typography'),
     // require('daisyui'),
   ],
   // daisyui: daisyUiConfig,

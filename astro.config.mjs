@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import node from '@astrojs/node';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,5 +15,8 @@ export default defineConfig({
     plugins: [
       tailwindcss(),
     ]
-  }
+  },
+  integrations: [
+    icon()
+  ]
 });

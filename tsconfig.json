@@ -10,6 +10,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"],
+      "@/*": ["src/*"],
       "@pkg/*": ["packages/*"],
       "@assets/*": ["public/*"],
       "@gen/*": [".shopify/*"],
@@ -22,6 +23,9 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "types": ["astro/client"]
+    "types": ["astro/client"],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   }
 }

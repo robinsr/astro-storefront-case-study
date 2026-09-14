@@ -38,6 +38,12 @@ importers:
       daisyui:
         specifier: 5.0.50
         version: 5.0.50
+      lucide-astro:
+        specifier: 0.303.0
+        version: 0.303.0(astro@5.13.3(@types/node@24.3.0)(jiti@2.5.1)(lightningcss@1.30.1)(rollup@4.48.0)(typescript@5.9.2))
+      lucide-static:
+        specifier: 0.303.0
+        version: 0.303.0
       tailwindcss:
         specifier: ^4.1.12
         version: 4.1.12
@@ -47,6 +53,10 @@ importers:
       zod:
         specifier: ^4.1.1
         version: 4.1.1
+    devDependencies:
+      '@types/alpinejs':
+        specifier: 3.13.6
+        version: 3.13.6
 
 packages:
 
@@ -640,6 +650,9 @@ packages:
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
+
+  '@types/alpinejs@3.13.6':
+    resolution: {integrity: sha512-BMi1/2uQz7mp30VFn69SzjN7YwQ0QzE4Hn3RMBt4iMpQeasdbMiImv1f5yvK1bYmvjIyG/YFg+CgPxbjIXZk0g==}
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
@@ -1349,6 +1362,14 @@ packages:
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
+
+  lucide-astro@0.303.0:
+    resolution: {integrity: sha512-9RCJLwMNs7PuRkZ6Lp1MNNKgfTwBE5PiTdyFr/1jFC9x8zaFuF7X8rjeJlG/bYzjkJ5Zl+atmLL31QCxUEuuwQ==}
+    peerDependencies:
+      astro: '>=2.7.1'
+
+  lucide-static@0.303.0:
+    resolution: {integrity: sha512-uXHewtx99MqbMHCaQzhPqc+k36kRZ6UDPIwQY8YuYae5MgW82Zpng7rwA3xL7SnFl6xUpGE4ZKNKPgyAuErJrQ==}
 
   magic-string@0.30.18:
     resolution: {integrity: sha512-yi8swmWbO17qHhwIBNeeZxTceJMeBvWJaId6dyvTSOwTipqeHhMhOrz6513r1sOKnpvQ7zkhlG8tPrpilwTxHQ==}
@@ -2661,6 +2682,8 @@ snapshots:
 
   '@trysound/sax@0.2.0': {}
 
+  '@types/alpinejs@3.13.6': {}
+
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 2.1.0
@@ -3501,6 +3524,12 @@ snapshots:
   longest-streak@3.1.0: {}
 
   lru-cache@10.4.3: {}
+
+  lucide-astro@0.303.0(astro@5.13.3(@types/node@24.3.0)(jiti@2.5.1)(lightningcss@1.30.1)(rollup@4.48.0)(typescript@5.9.2)):
+    dependencies:
+      astro: 5.13.3(@types/node@24.3.0)(jiti@2.5.1)(lightningcss@1.30.1)(rollup@4.48.0)(typescript@5.9.2)
+
+  lucide-static@0.303.0: {}
 
   magic-string@0.30.18:
     dependencies:
