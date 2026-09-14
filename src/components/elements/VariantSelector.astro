@@ -1,0 +1,35 @@
+---
+import type { StoreItem } from '~/service/model/StoreItem';
+
+interface Props {
+  item: StoreItem;
+  selectedOptions: Record<string, string>;
+}
+
+const { item, selectedOptions } = Astro.props;
+const options = item.options ?? [];
+---
+
+{options.length > 0 && (
+  <form id="variantSelector" method="get">
+    {options.map((option) => (
+      <div class="mb-4">
+        <label class="mb-1 block text-sm font-semibold" for={option.name}>
+          {option.name}
+        </label>
+        <select
+          name={option.name}
+          id={option.name}
+          class="d-select d-select-bordered w-full max-w-xs"
+          onchange="this.form.submit()"
+        >
+          {option.values.map((value) => (
+            <option value={value} selected={selectedOptions[option.name] === value}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </div>
+    ))}
+  </form>
+)}

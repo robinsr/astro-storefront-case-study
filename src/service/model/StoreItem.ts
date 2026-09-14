@@ -6,17 +6,28 @@ import { FALLBACK_IMG } from '~/consts';
 /**
  * Product model used for rendering items on parts/store pages
  */
+export type SelectedOption = {
+  name: string;
+  value: string;
+};
+
 export type StoreItem = {
   id: string;
   handle: string;
   title: string;
   description: string;
+  descriptionHtml: string;
   price: number;
   tags: string[];
   images: {
     main: ImageResult;
     alt?: ImageResult[];
   };
+  options?: {
+    id: string;
+    name: string;
+    values: string[];
+  }[];
   collections?: {
     id: string;
     handle: string;
@@ -34,11 +45,12 @@ export const fromSchema = (item: ProductResult): StoreItem => {
     throw new Error('Cannot convert TinyProductSchema to StoreItem');
   }
 
-  const storeItem = {
+  const storeItem: StoreItem = {
     id: item.id,
     handle: item.handle,
     title: item.title,
     description: item.description,
+    descriptionHtml: '',
     price: item.variants.nodes[0].price.amount,
     images: {
       main: item.featuredImage ? item.featuredImage : item.images?.nodes?.at(0) ?? FALLBACK_IMG,
@@ -51,6 +63,12 @@ export const fromSchema = (item: ProductResult): StoreItem => {
     item = item as FullProductResult;
 
     Object.assign(storeItem, {
+      descriptionHtml: item.descriptionHtml || '',
+      options: item.options ? item.options.map((option) => ({
+        id: option.id,
+        name: option.name,
+        values: option.values,
+      })) : [],
       collections: item.collections.nodes.map((collection) => ({
         id: collection.id,
         handle: collection.handle,

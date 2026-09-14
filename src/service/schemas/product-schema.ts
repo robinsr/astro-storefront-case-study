@@ -71,7 +71,7 @@ export const FullProductSchema = z.object({
   productType: z.string().optional(),
   vendor: z.string().optional(),
   description: z.string(),
-  // descriptionHtml: z.string(),
+  descriptionHtml: z.string().optional().default(''),
   options: z.array(ProductOptionSchema).nullable(),
   featuredImage: ImageSchema,
   collections: z.object({

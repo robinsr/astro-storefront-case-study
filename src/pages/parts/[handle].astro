@@ -1,0 +1,99 @@
+---
+export const prerender = false;
+
+import type { SelectedOption } from '~/service/model/StoreItem';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Text from '~/components/elements/Text.astro';
+import VariantSelector from '~/components/elements/VariantSelector.astro';
+import AddToCart from '~/components/product/detail/AddToCart.astro';
+import { variantPrice } from '~/hooks/usePrice';
+import { fromSchema } from '~/service/model/StoreItem';
+import shopify from '~/service/shopify';
+import { FALLBACK_IMG } from '~/consts';
+import getLogger from '~/util/log';
+
+const log = getLogger('pages/parts/[handle]');
+
+const BUYER_IP = process.env.NODE_ENV === 'development' ? '127.0.0.1' : Astro.clientAddress;
+
+const { handle } = Astro.params;
+const params = Astro.url.searchParams;
+
+const selectedOptions: SelectedOption[] = [];
+for (const [key, value] of params) {
+  selectedOptions.push({ name: key, value });
+}
+
+const product = await shopify.product
+  .get({ handle: handle!, selectedOptions }, BUYER_IP)
+  .catch((error) => {
+    log.error('Failed to get product', error);
+    return null;
+  });
+
+if (!product) {
+  return Astro.redirect('/404');
+}
+
+const item = fromSchema(product);
+const { title, description, descriptionHtml, images, options } = item;
+
+// Find the selected variant by matching all URL params, or fall back to first
+const selectedOptionsMap = Object.fromEntries(selectedOptions.map((o) => [o.name, o.value]));
+const variant =
+  selectedOptions.length > 0
+    ? product.variants.nodes.find((v) =>
+        v.selectedOptions.every((o) => selectedOptionsMap[o.name] === o.value),
+      ) ?? product.variants.nodes[0]
+    : product.variants.nodes[0];
+
+const price = variantPrice(variant);
+---
+
+<BaseLayout title={`${title} | Shop`}>
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div class="col-span-1">
+      <Text class="font-light">
+        <button class="bg-cw_orange m-1 p-2 px-4 text-white" onclick="history.back()">
+          ← Back
+        </button>
+      </Text>
+
+      <img
+        src={images.main.url || FALLBACK_IMG.url}
+        width={images.main.width || FALLBACK_IMG.width}
+        height={images.main.height || FALLBACK_IMG.height}
+        alt={title}
+        class="w-full rounded border border-base-200 object-cover object-center"
+      />
+    </div>
+
+    <div class="lg:col-span-2">
+      <div class="mb-8">
+        <Text product-title data-testid="title">{title}</Text>
+        {product.vendor && (
+          <Text type="body" class="text-sm opacity-60">{product.vendor}</Text>
+        )}
+      </div>
+
+      {descriptionHtml ? (
+        <div class="prose my-8" set:html={descriptionHtml} />
+      ) : (
+        <Text type="body" class="my-8">{description}</Text>
+      )}
+
+      <VariantSelector item={item} selectedOptions={selectedOptionsMap} />
+
+      <div class="d-divider d-divider-primary"></div>
+
+      <div class="mb-8 flex w-full flex-row flex-nowrap items-center justify-start gap-4">
+        <Text product-price class="flex-grow">
+          <span>{price.symbol}</span>
+          <span class="font-bold">{price.amount}</span>
+          <span>{price.currencyCode}</span>
+        </Text>
+        <AddToCart variant={variant} />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
