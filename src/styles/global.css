@@ -5,9 +5,10 @@
 @plugin "@tailwindcss/aspect-ratio";
 @plugin "tailwindcss-bg-patterns";
 
-/* Configure DaisyUI - Previously in tailwind.config.cjs */
+/* ─── DaisyUI ─────────────────────────────────────────────────────────────── */
+
 @plugin "daisyui" {
-  themes: corporate --default, dark --prefersdark, light;
+  themes: moto-light --default, moto-dark --prefersdark;
   root: ":root";
   include: all;
   exclude: none;
@@ -18,155 +19,137 @@
   logs: true;
 }
 
+/* moto-light — orange primary, siren secondary, picton accent */
+[data-theme="moto-light"] {
+  color-scheme: light;
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(96% 0.005 248);
+  --color-base-300: oklch(92% 0.008 248);
+  --color-base-content: oklch(26.2% 0.009 248.2);
+  --color-primary: oklch(63.8% 0.183 38.7);
+  --color-primary-content: oklch(94.4% 0.009 247.9);
+  --color-secondary: oklch(39.6% 0.159 358.1);
+  --color-secondary-content: oklch(94.4% 0.009 247.9);
+  --color-accent: oklch(71.3% 0.131 228.7);
+  --color-accent-content: oklch(26.2% 0.009 248.2);
+  --color-neutral: oklch(94.4% 0.009 247.9);
+  --color-neutral-content: oklch(26.2% 0.009 248.2);
+  --color-info: oklch(71.3% 0.131 228.7);
+  --color-info-content: oklch(100% 0 0);
+  --color-success: oklch(74.2% 0.229 142.8);
+  --color-success-content: oklch(100% 0 0);
+  --color-warning: oklch(82% 0.189 84);
+  --color-warning-content: oklch(26% 0 0);
+  --color-error: oklch(57.1% 0.222 20.1);
+  --color-error-content: oklch(100% 0 0);
+  --radius-selector: 0.3rem;
+  --radius-field: 0.3rem;
+  --radius-box: 0.4rem;
+}
 
+/* moto-dark — same brand colors on a dark base */
+[data-theme="moto-dark"] {
+  color-scheme: dark;
+  --color-base-100: oklch(26.2% 0.009 248.2);
+  --color-base-200: oklch(22% 0.009 248);
+  --color-base-300: oklch(18% 0.008 248);
+  --color-base-content: oklch(94.4% 0.009 247.9);
+  --color-primary: oklch(63.8% 0.183 38.7);
+  --color-primary-content: oklch(94.4% 0.009 247.9);
+  --color-secondary: oklch(39.6% 0.159 358.1);
+  --color-secondary-content: oklch(94.4% 0.009 247.9);
+  --color-accent: oklch(71.3% 0.131 228.7);
+  --color-accent-content: oklch(26.2% 0.009 248.2);
+  --color-neutral: oklch(34.5% 0.013 248.2);
+  --color-neutral-content: oklch(94.4% 0.009 247.9);
+  --color-info: oklch(71.3% 0.131 228.7);
+  --color-info-content: oklch(100% 0 0);
+  --color-success: oklch(74.2% 0.229 142.8);
+  --color-success-content: oklch(100% 0 0);
+  --color-warning: oklch(82% 0.189 84);
+  --color-warning-content: oklch(26% 0 0);
+  --color-error: oklch(57.1% 0.222 20.1);
+  --color-error-content: oklch(100% 0 0);
+  --radius-selector: 0.3rem;
+  --radius-field: 0.3rem;
+  --radius-box: 0.4rem;
+}
 
+/* ─── Custom Palette (Tailwind v4 @theme) ─────────────────────────────────── */
+/* These generate bg-*, text-*, border-* utilities for each color.            */
+/* Underscore names preserve existing class names (bg-cw_orange, etc.)        */
 
+@theme {
+  /* Semantic palette */
+  --color-cinnabar: oklch(63.8% 0.183 38.7);
+  --color-copper: oklch(44.1% 0.121 39.1);
+  --color-clink: oklch(24.3% 0.057 40.1);
+  --color-siren: oklch(39.6% 0.159 358.1);
+  --color-purple_heart: oklch(48.0% 0.253 283.6);
+  --color-picton_blue: oklch(71.3% 0.131 228.7);
+  --color-shark: oklch(26.2% 0.009 248.2);
+  --color-outerspace: oklch(34.5% 0.013 248.2);
+  --color-nepal: oklch(71.1% 0.045 247.4);
+  --color-mystic: oklch(94.4% 0.009 247.9);
 
-/* @config "../../tailwind.config.cjs"; */
+  /* Brand CW colors */
+  --color-cw_orange: oklch(63.6% 0.182 39.0);
+  --color-cw_dark_orange: oklch(51.9% 0.150 38.6);
+  --color-cw_gray: oklch(51.5% 0.004 197.0);
+  --color-cw_dark_gray: oklch(31.9% 0.003 197.0);
+  --color-cw_light_gray: oklch(71.1% 0.006 197.0);
+  --color-cw_blue: oklch(57.4% 0.141 243.9);
+  --color-cw_green: oklch(74.2% 0.229 142.8);
+  --color-cw_red: oklch(57.1% 0.222 20.1);
+
+  /* Custom aspect ratios */
+  --aspect-ratio-4\/1: 4 / 1;
+  --aspect-ratio-3\/1: 3 / 1;
+}
+
+/* ─── Base layer ──────────────────────────────────────────────────────────── */
 
 @layer base {
-
-  /* Necessary for AlpineJS x-cloak directive */
-  /* See https://alpinejs.dev/directives/cloak */
+  /* AlpineJS x-cloak: hide elements until Alpine is ready */
   [x-cloak] {
     display: none !important;
   }
 
   body {
-    @apply flex flex-col min-h-screen min-w-96
-  }
-
-  body {
-    /*background-image: url('/images/topography.svg');*/
+    @apply flex flex-col min-h-screen min-w-96;
+    font-family: 'Atkinson', sans-serif;
   }
 
   main {
-    @apply flex-auto
+    @apply flex-auto;
+    width: calc(100% - 2em);
+    max-width: calc(100% - 2em);
+    margin: auto;
+    padding: 0;
+  }
+
+  @media (min-width: 640px)  { main { width: calc(640px  * 1.00); } }
+  @media (min-width: 768px)  { main { width: calc(768px  * 1.00); } }
+  @media (min-width: 1024px) { main { width: calc(1024px * 0.95); } }
+  @media (min-width: 1280px) { main { width: calc(1280px * 0.95); } }
+  @media (min-width: 1536px) { main { width: calc(1536px * 0.88); } }
+
+  a:active {
+    @apply ring-1;
   }
 }
+
+/* ─── Custom spacing utilities ────────────────────────────────────────────── */
 
 @layer utilities {
-  /* Custom Utilities */
-
-  .cw-space-xl {
-    @apply mt-16 mb-12;
-  }
-
-  .cw-space-lg {
-    @apply mt-12 mb-8;
-  }
-
-  .cw-space-md {
-    @apply mt-8 mb-6;
-  }
-
-  .cw-space-sm {
-    @apply mt-6 mb-4;
-  }
-
-  .cw-space-xs {
-    @apply mt-4 mb-2;
-  }
-
-  .cw-space-base {
-    @apply mt-8 mb-6;
-    /* @apply cw-space-md; */
-  }
-
-  .cw-space-none {
-    @apply mt-0 mb-1;
-  }
-
-  .m-base {
-    @apply mt-8 mb-6;
-  }
-
-  .mt-base {
-    @apply mt-8;
-  }
-
-  .mb-base {
-    @apply mb-6;
-  }
-
-
-  @variants responsive {
-    /* CSS to apply to all variants */
-  }
-}
-
-:root {
-  --accent: #2337ff;
-  --accent-dark: #000d8a;
-  --black: 15, 18, 25;
-  --gray: 96, 115, 159;
-  --gray-light: 229, 233, 240;
-  --gray-dark: 34, 41, 57;
-  --gray-gradient: rgba(var(--gray-light), 50%), #fff;
-  --box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-    0 16px 32px rgba(var(--gray), 33%);
-  --cw-orange: #E25926;
-  --cw-gray-dark: #656868;
-  --cw-gray-light: rgb(130, 3, 70);
-}
-
-/* @font-face {
-  font-family: 'Atkinson';
-  src: url('/fonts/atkinson-regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Atkinson';
-  src: url('/fonts/atkinson-bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-} */
-
-body {
-  font-family: 'Atkinson', sans-serif;
-}
-
-main {
-  width: calc(100% - 2em);
-  max-width: calc(100% - 2em);
-  margin: auto;
-  padding: 0;
-}
-
-@media (min-width: 640px) {
-  main {
-    width: calc(640px * 1);
-  }
-}
-
-@media (min-width: 768px) {
-  main {
-    width: calc(768px * 1);
-  }
-}
-
-@media (min-width: 1024px) {
-  main {
-    width: calc(1024px * .95);
-  }
-}
-
-@media (min-width: 1280px) {
-  main {
-    width: calc(1280px * .95);
-  }
-}
-
-@media (min-width: 1536px) {
-  main {
-    width: calc(1536px * .88);
-  }
-}
-
-a:active {
-  @apply ring-1;
+  .cw-space-xl   { @apply mt-16 mb-12; }
+  .cw-space-lg   { @apply mt-12 mb-8; }
+  .cw-space-md   { @apply mt-8  mb-6; }
+  .cw-space-sm   { @apply mt-6  mb-4; }
+  .cw-space-xs   { @apply mt-4  mb-2; }
+  .cw-space-base { @apply mt-8  mb-6; }
+  .cw-space-none { @apply mt-0  mb-1; }
+  .m-base        { @apply mt-8  mb-6; }
+  .mt-base       { @apply mt-8; }
+  .mb-base       { @apply mb-6; }
 }
