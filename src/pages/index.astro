@@ -2,12 +2,64 @@
 export const prerender = false;
 
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '~/consts';
+import Hero from '~/components/elements/Hero.astro';
+import Card from '~/components/elements/Card.astro';
+import Text from '~/components/elements/Text.astro';
+import PageTitle from '~/components/elements/PageTitle.astro';
+import shopify from '~/service/shopify';
+import getLogger from '~/util/log';
+import { HERO_IMAGES, SITE_DESCRIPTION } from '~/consts';
+
+const log = getLogger('pages/index');
+
+const BUYER_IP = process.env.NODE_ENV === 'development' ? '127.0.0.1' : Astro.clientAddress;
+
+const rawResult = await shopify.collection
+  .list({ first: 6, first_products: 0 }, BUYER_IP)
+  .catch((error) => { log.error(error); return null; });
+
+const collections = rawResult
+  ? rawResult.items.filter((c) => c.itemCount > 0)
+  : [];
 ---
 
 <BaseLayout description={SITE_DESCRIPTION}>
-  <div class="container mx-auto px-4 py-16 text-center">
-    <h1 class="font-['Commerce'] text-5xl mb-4">{SITE_TITLE}</h1>
-    <p class="text-xl opacity-70">Track day &amp; racing parts for serious riders.</p>
+  <div slot="after-nav" class="min-w-full">
+    <Hero slides={HERO_IMAGES} />
   </div>
+
+  <article class="prose mx-auto my-12 px-4">
+    <PageTitle title="Counter Weight Motorsport" />
+    <Text type="page-h2">
+      A PNW-based professional road racing team and performance shop. We help track riders
+      and club racers achieve their goals using a data-driven approach to equipment
+      preparation. Trackside support and data services available throughout the US.
+    </Text>
+  </article>
+
+  {collections.length > 0 && (
+    <section class="my-12 px-4">
+      <div class="mb-6 flex items-baseline justify-between">
+        <Text type="page-h2" class="mb-0">Shop by Category</Text>
+        <a href="/parts" class="text-sm underline opacity-70 hover:opacity-100">View all →</a>
+      </div>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {collections.map(({ handle, image, title, description, itemCount }) => (
+          <Card link={`/parts/categories/${handle}`}>
+            <img
+              slot="image"
+              src={image.url}
+              alt={image.altText || title}
+              class="h-full w-full object-contain"
+            />
+            <Text callout decoration="underline">{title}</Text>
+            <small class="my-0 text-xs">
+              ({itemCount ? `${itemCount} Items` : 'No Items'})
+            </small>
+            <Text type="body">{description}</Text>
+          </Card>
+        ))}
+      </div>
+    </section>
+  )}
 </BaseLayout>
