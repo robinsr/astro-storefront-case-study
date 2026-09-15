@@ -1,0 +1,118 @@
+---
+export const prerender = false;
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageTitle from '~/components/elements/PageTitle.astro';
+import Text from '~/components/elements/Text.astro';
+---
+
+<BaseLayout title="Cart">
+  <PageTitle title="Your Cart" />
+
+  <div
+    x-data="cartPage"
+    x-init="init()"
+    class="mt-8"
+  >
+    <!-- Empty state -->
+    <div x-show="items.length === 0" class="py-16 text-center">
+      <Text type="body" class="opacity-60">Your cart is empty.</Text>
+      <a href="/parts" class="d-btn d-btn-primary mt-6">Browse Parts</a>
+    </div>
+
+    <!-- Cart items -->
+    <div x-show="items.length > 0">
+      <div class="overflow-x-auto">
+        <table class="d-table w-full">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Variant</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="item in items" :key="item.variantId">
+              <tr class="d-hover">
+                <td>
+                  <div class="flex items-center gap-3">
+                    <div class="d-avatar">
+                      <div class="h-12 w-12 rounded">
+                        <img :src="item.imageUrl || '/favicon.svg'" :alt="item.title" />
+                      </div>
+                    </div>
+                    <a :href="`/parts/${item.productHandle}`" class="font-semibold hover:underline" x-text="item.title"></a>
+                  </div>
+                </td>
+                <td x-text="item.variantTitle !== 'Default Title' ? item.variantTitle : '—'"></td>
+                <td>
+                  <span x-text="`$${item.priceAmount.toFixed(2)}`"></span>
+                  <span class="text-xs opacity-60" x-text="item.priceCurrency"></span>
+                </td>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <button
+                      class="d-btn d-btn-xs d-btn-ghost"
+                      @click="$store.cart.updateQty(item.variantId, -1); refresh()"
+                    >−</button>
+                    <span x-text="item.quantity" class="w-6 text-center"></span>
+                    <button
+                      class="d-btn d-btn-xs d-btn-ghost"
+                      @click="$store.cart.updateQty(item.variantId, 1); refresh()"
+                    >+</button>
+                  </div>
+                </td>
+                <td x-text="`$${(item.priceAmount * item.quantity).toFixed(2)}`"></td>
+                <td>
+                  <button
+                    class="d-btn d-btn-xs d-btn-ghost text-error"
+                    @click="$store.cart.removeItem(item.variantId); refresh()"
+                  >Remove</button>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Totals -->
+      <div class="mt-8 flex flex-col items-end gap-4">
+        <div class="text-lg font-semibold">
+          Subtotal: <span x-text="`$${subtotal.toFixed(2)} USD`"></span>
+        </div>
+        <div class="flex gap-4">
+          <button
+            class="d-btn d-btn-ghost d-btn-sm"
+            @click="$store.cart.clear(); refresh()"
+          >Clear Cart</button>
+          <a href="/parts" class="d-btn d-btn-outline d-btn-sm">Continue Shopping</a>
+          <button class="d-btn d-btn-primary d-btn-sm" disabled>Checkout (demo)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import Alpine from 'alpinejs';
+    import type { CartItem } from '~/scripts/cart';
+
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('cartPage', () => ({
+        items: [] as CartItem[],
+        subtotal: 0,
+
+        init() {
+          this.refresh();
+        },
+
+        refresh() {
+          const store = Alpine.store('cart') as { items: CartItem[]; subtotal: number };
+          this.items = [...store.items];
+          this.subtotal = store.subtotal;
+        },
+      }));
+    });
+  </script>
+</BaseLayout>

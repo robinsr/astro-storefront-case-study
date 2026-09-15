@@ -6,23 +6,15 @@ const { class: className, ...props } = Astro.props;
 const tailwind = "font-['Commerce'] text-xl float-right rounded-none";
 ---
 
-<Button
-  class:list={[tailwind, className]}
-  {...props}
-  type="link"
-  variant="primary"
+<a
+  x-data
   href="/users/cart"
-  icon="lucide:shopping-cart"
->Cart</Button>
-
-<script>
-  import Alpine from 'alpinejs';
-
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('cartBtn', () => ({
-      cartCount: 0,
-      init() {},
-      destroy() {},
-    }));
-  });
-</script>
+  class:list={[tailwind, className, 'd-btn d-btn-primary rounded-none']}
+>
+  <span>Cart</span>
+  <span
+    x-show="$store.cart?.qty > 0"
+    x-text="`(${$store.cart?.qty ?? 0})`"
+    class="ml-1"
+  ></span>
+</a>

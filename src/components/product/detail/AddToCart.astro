@@ -8,10 +8,15 @@ const { variant } = Astro.props;
 ---
 
 <button
-  class="bg-cw_orange p-2 px-4 text-white align-middle m-1 hover:bg-cw_dark_orange transition-colors"
+  class="bg-cw_orange m-1 cursor-pointer p-2 px-4 align-middle text-white transition-colors hover:bg-cw_dark_orange"
   data-variant-id={variant.id}
   data-product-handle={variant.product.handle}
-  onclick={"addToCart(event, '" + variant.id + "', '" + variant.product.handle + "')"}
+  data-product-title={variant.product.title}
+  data-variant-title={variant.title}
+  data-price-amount={String(variant.price.amount)}
+  data-price-currency={variant.price.currencyCode}
+  data-image-url={variant.image?.url ?? ''}
+  onclick="addToCart(event)"
 >
   Add to Cart
 </button>
